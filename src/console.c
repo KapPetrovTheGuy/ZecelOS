@@ -110,18 +110,159 @@ void pixel(VGA_COLOR_TYPE pc) {
 
 }
 
-void rectangle(VGA_COLOR_TYPE rc, int start_y_pos) {
+void rectangle(VGA_COLOR_TYPE rc, int start_x_pos,  int start_y_pos) {
 
     int ba = start_y_pos++;
+    int nah = start_x_pos++;
 
-    console_gotoxy(0, start_y_pos);
+    console_gotoxy(start_x_pos, start_y_pos);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    console_gotoxy(start_x_pos, ba);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    console_gotoxy(start_x_pos, ba);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+    pixel(rc);
+}
+
+void Russia() {
+
+    //russia
+
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+
+    console_gotoxy(0, 2);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+
+    console_gotoxy(0, 3);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+}
+
+void Ireland() {
+
+    //ireland
+    console_gotoxy(0, 5);
+
+    pixel(COLOR_GREEN);
+    console_gotoxy(0, 6);
+    pixel(COLOR_GREEN);
+    console_gotoxy(0, 7);
+    pixel(COLOR_GREEN);
+    console_gotoxy(0, 8);
+    pixel(COLOR_GREEN);
+    console_gotoxy(0, 9);
+    pixel(COLOR_GREEN);
+    console_gotoxy(0, 10);
+    pixel(COLOR_GREEN);
+    console_gotoxy(0, 11);
+    pixel(COLOR_GREEN);
+
+    console_gotoxy(1, 5);
     pixel(COLOR_WHITE);
+    console_gotoxy(1, 6);
     pixel(COLOR_WHITE);
+    console_gotoxy(1, 7);
     pixel(COLOR_WHITE);
+    console_gotoxy(1, 8);
     pixel(COLOR_WHITE);
+    console_gotoxy(1, 9);
     pixel(COLOR_WHITE);
+    console_gotoxy(1, 10);
     pixel(COLOR_WHITE);
+    console_gotoxy(1, 11);
     pixel(COLOR_WHITE);
+
+    console_gotoxy(2, 5);
+    pixel(COLOR_YELLOW);
+    console_gotoxy(2, 6);
+    pixel(COLOR_YELLOW);
+    console_gotoxy(2, 7);
+    pixel(COLOR_YELLOW);
+    console_gotoxy(2, 8);
+    pixel(COLOR_YELLOW);
+    console_gotoxy(2, 9);
+    pixel(COLOR_YELLOW);
+    console_gotoxy(2, 10);
+    pixel(COLOR_YELLOW);
+    console_gotoxy(2, 11);
+    pixel(COLOR_YELLOW);
+}
+
+void England() {
+
+    // ENGLANDDDDDDDDDDDDDD
+
+    console_gotoxy(0, 15);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
@@ -129,15 +270,16 @@ void rectangle(VGA_COLOR_TYPE rc, int start_y_pos) {
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    pixel(COLOR_RED);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
-    console_gotoxy(0, ba);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    console_gotoxy(0, 16);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
@@ -145,32 +287,50 @@ void rectangle(VGA_COLOR_TYPE rc, int start_y_pos) {
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    pixel(COLOR_RED);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
-    console_gotoxy(0, ba);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    console_gotoxy(0, 17);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED); // center
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    console_gotoxy(0, 18);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE); // center
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    pixel(COLOR_RED);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
-    console_gotoxy(0, ba);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    console_gotoxy(0, 19);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
@@ -178,27 +338,64 @@ void rectangle(VGA_COLOR_TYPE rc, int start_y_pos) {
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
+    pixel(COLOR_RED);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
-    console_gotoxy(0, ba);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
-    pixel(COLOR_WHITE);
+
+}
+
+void square(VGA_COLOR_TYPE sc, int start_x_pos, int start_y_pos)
+{
+    int nh = start_y_pos += 1;
+    int nhh = nh += 1;
+    int nhhh = nhh += 1;
+
+    int bh = start_x_pos += 1;
+    int bhh = bh += 1;
+    int bhhh = bhh += 1;
+
+    console_gotoxy(start_x_pos, start_y_pos);
+
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+
+    console_gotoxy(start_x_pos, nh);
+
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+
+    console_gotoxy(start_x_pos, nhh);
+
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+
+    console_gotoxy(start_x_pos, nhhh);
+
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+    pixel(sc);
+
+//     rectangle(sc, start_y_pos);
+//     rectangle(sc, nh);
+//     rectangle(sc, nhh);
+//     rectangle(sc, nhhh);
 }
 
 // revert back the printed character and add 0 to it

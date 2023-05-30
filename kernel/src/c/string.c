@@ -3,10 +3,10 @@
  * Author(s) - OSDev Wiki, Kap Petrov, amrix
  */
 
-#include <string.h>
+#include <c/string.h>
 #include <stdint.h>
 
-void *MemSet(void *dst, char c, uint32 n) 
+void *MemSet(void *dst, char c, uint32_t n) 
 {
 	char *temp = dst;
 	for (; n != 0; n--) *temp++ = c;
@@ -25,7 +25,7 @@ void *MemCopy(void *dst, const void *src, uint32_t n)
 	return ret;
 }
 
-int MemCompare(uint8_t *s1, uint8_t *s2, uint32 n) 
+int MemCompare(uint8_t *s1, uint8_t *s2, uint32_t n) 
 {
     while (n--) {
     	if (*s1 != *s2)

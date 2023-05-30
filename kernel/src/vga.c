@@ -5,13 +5,17 @@
 
 #include <vga.h>
 #include <ports.h>
+#include <c/string.h>
 #include <stdint.h>
 
 #define VGA_ADDRESS 0xb8000
 
-void Clear(VgaColor bg, VgaColor fg)
+static VgaColor fg = White, bg = Black;
+
+void SetColors(VgaColor _bg, VgaColor _fg)
 {
-	bg = fg;
+	fg = _fg;
+	bg = _bg;
 }
 
 void MoveCursor(uint8_t x, uint8_t y)
@@ -46,9 +50,23 @@ uint16_t GetCursorPosition(void)
 	return position;
 }
 
-void PutChar(char c, uint8_t x, uint8_t y, VgaColor fg, VgaColor bg)
+int PutChar(char c, uint8_t x, uint8_t y)
 {
+	if (c == '\n' || c == '\r' || c == '\b')
+		return 1;
+
 	volatile uint16_t *where = 
 		(volatile uint16_t *)VGA_ADDRESS + (y * 80 + x);
 	*where = c | (((bg << 4) | (fg & 0x0f)) << 8);
+
+	return 0;
+}
+
+int PutStr(char *str, uint8_t x, uint8_t y)
+{
+	for (int i = 0; i < StrLength(str); i++)
+		if (PutChar(str[i], x + i, y))
+			return 1;
+	
+	return 0;
 }

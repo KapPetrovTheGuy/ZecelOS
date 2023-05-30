@@ -22,10 +22,12 @@ typedef enum {
 	White
 } VgaColor;
 
+void SetColors(VgaColor fg, VgaColor bg);
 void MoveCursor(uint8_t x, uint8_t y);
 void EnableCursor(void);
 void DisableCursor(void);
 uint16_t GetCursorPosition(void);
-void PutChar(char c, uint8_t x, uint8_t y, VgaColor fg, VgaColor bg);
+int PutChar(char c, uint8_t x, uint8_t y);
+int PutStr(char *str, uint8_t x, uint8_t y);
 
 #endif

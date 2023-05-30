@@ -15,11 +15,11 @@ iso:
 	mkdir -p iso_tmp/boot/grub
 	cp kernel/kernel.elf iso_tmp/boot/
 	cp cfg/grub.cfg iso_tmp/boot/grub/ 
-	grub-mkrescue -o $(ISO)
+	grub-mkrescue -o $(ISO) iso_tmp
 
 run: iso
 	$(VM) -cdrom $(ISO) $(VMFLAGS)
 
 clean:
 	make -C kernel clean
-	rm -r iso_tmp $(ISO)
+	rm -r iso_tmp $(ISO)

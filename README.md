@@ -18,7 +18,8 @@ Because its fun!
 C, NASM Syntax Assembly.
 
 # Image?
-![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/be214380-4b5c-4bb8-be61-1da9fcbbd608)
+![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/6c810028-5ae2-4ca0-95bd-516b550a0bcb)
+
 (ZecelOS Drawing Russia, Ireland, England Flags.)
 
 # Developers Names?

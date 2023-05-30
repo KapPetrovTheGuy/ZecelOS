@@ -12,6 +12,7 @@ void display_sections() {
 
     programballs();
     programni();
+    programempty();
 
 //     square(COLOR_MAGENTA, 5, 8);
 //
@@ -33,6 +34,14 @@ void programni()
 
     console_gotoxy(8, 5);
     ni();
+}
+
+void programempty()
+{
+    Window(COLOR_BLUE, 9, 8);
+
+    console_gotoxy(10, 8);
+    empty();
 }
 
 void kmain() {

@@ -524,6 +524,15 @@ void ni()
     g_vga_buffer[g_vga_index++] = vga_item_entry('i', COLOR_WHITE, COLOR_MAGENTA);
 }
 
+void empty()
+{
+    g_vga_buffer[g_vga_index++] = vga_item_entry('E', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('m', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('p', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('t', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('y', COLOR_WHITE, COLOR_BLUE);
+}
+
 // revert back the printed character and add 0 to it
 void console_ungetchar() {
     if(g_vga_index > 0) {

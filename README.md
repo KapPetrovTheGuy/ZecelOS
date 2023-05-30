@@ -18,7 +18,7 @@ Because its fun!
 C, NASM Syntax Assembly.
 
 # Image?
-![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/0a0f76de-a380-4bb3-800e-9751ab3ba3aa)
+![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/bb70d662-ff41-4d58-addb-c57ed2cc024e)
 
 # Developers Names?
 1. Kap Petrov, Programmer, Main Lead.

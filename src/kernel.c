@@ -11,6 +11,7 @@ void display_sections() {
     MiniRussia(74, 22);
 
     programballs();
+    programni();
 
 //     square(COLOR_MAGENTA, 5, 8);
 //
@@ -24,6 +25,14 @@ void programballs()
 
     console_gotoxy(1, 4);
     balls();
+}
+
+void programni()
+{
+    Window(COLOR_MAGENTA, 7, 5);
+
+    console_gotoxy(8, 5);
+    ni();
 }
 
 void kmain() {

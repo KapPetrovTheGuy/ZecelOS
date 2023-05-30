@@ -505,7 +505,7 @@ void Window(VGA_COLOR_TYPE color, int x, int y)
 
     Box(color, x, winyyyyy);
 
-    console_gotoxy(32, 4);
+    console_gotoxy(x+=32, y-=2);
     pixel(COLOR_RED);   // close button
 }
 
@@ -516,6 +516,12 @@ void balls()
     g_vga_buffer[g_vga_index++] = vga_item_entry('l', COLOR_WHITE, COLOR_BLUE);
     g_vga_buffer[g_vga_index++] = vga_item_entry('l', COLOR_WHITE, COLOR_BLUE);
     g_vga_buffer[g_vga_index++] = vga_item_entry('s', COLOR_WHITE, COLOR_BLUE);
+}
+
+void ni()
+{
+    g_vga_buffer[g_vga_index++] = vga_item_entry('n', COLOR_WHITE, COLOR_MAGENTA);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('i', COLOR_WHITE, COLOR_MAGENTA);
 }
 
 // revert back the printed character and add 0 to it

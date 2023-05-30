@@ -6,33 +6,27 @@
 
 void display_sections() {
 
-    printf("Welcome To ZecelOS! \n");
+    printf("ZecelOS Code Red 2023 \n");
 
-    //Russia();
+    MiniRussia(74, 22);
 
-    //Ireland();
+    programballs();
 
-    //England();
-
-    square(COLOR_RED, 5, 2);
-
-    rectangle(COLOR_GREEN, 10, 10);
+//     square(COLOR_MAGENTA, 5, 8);
 //
-//     square(COLOR_BLUE, 12);
-//
-//     rectangle(COLOR_BRIGHT_GREEN, 17);
-//
-//     square(COLOR_DARK_GREY, 21);
-//
-//     rectangle(COLOR_BRIGHT_MAGENTA, 27);
-
-//     square(COLOR_RED, 2);
-//
-//     rectangle(COLOR_GREEN, 10);
+//     rectangle(COLOR_BLUE, 19, 10);
 
 }
 
+void programballs()
+{
+    Window(COLOR_BLUE, 0, 4);
+
+    console_gotoxy(1, 4);
+    balls();
+}
+
 void kmain() {
-    console_init(COLOR_WHITE, COLOR_BLACK);
+    console_init(COLOR_WHITE, COLOR_GREEN);
     display_sections();
 }

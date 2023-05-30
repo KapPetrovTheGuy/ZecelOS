@@ -168,10 +168,12 @@ void rectangle(VGA_COLOR_TYPE rc, int start_x_pos,  int start_y_pos) {
     pixel(rc);
 }
 
-void Russia() {
+void Russia(int x, int y) {
 
     //russia
 
+    console_gotoxy(x, y++);
+
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
@@ -183,7 +185,10 @@ void Russia() {
     pixel(COLOR_WHITE);
     pixel(COLOR_WHITE);
 
-    console_gotoxy(0, 2);
+    int yplus = y++;
+    int yplusagain = yplus++;
+
+    console_gotoxy(x, yplusagain);
     pixel(COLOR_BLUE);
     pixel(COLOR_BLUE);
     pixel(COLOR_BLUE);
@@ -195,11 +200,44 @@ void Russia() {
     pixel(COLOR_BLUE);
     pixel(COLOR_BLUE);
 
-    console_gotoxy(0, 3);
+    console_gotoxy(x, yplus);
     pixel(COLOR_RED);
     pixel(COLOR_RED);
     pixel(COLOR_RED);
     pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+    pixel(COLOR_RED);
+}
+
+void MiniRussia(int x, int y) {
+
+    //russia
+
+    console_gotoxy(x, y++);
+
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+    pixel(COLOR_WHITE);
+
+    int yplusa = y++;
+    int yplusagaina = yplusa++;
+
+    console_gotoxy(x, yplusagaina);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+    pixel(COLOR_BLUE);
+
+    console_gotoxy(x, yplusa);
     pixel(COLOR_RED);
     pixel(COLOR_RED);
     pixel(COLOR_RED);
@@ -391,11 +429,93 @@ void square(VGA_COLOR_TYPE sc, int start_x_pos, int start_y_pos)
     pixel(sc);
     pixel(sc);
     pixel(sc);
+}
 
-//     rectangle(sc, start_y_pos);
-//     rectangle(sc, nh);
-//     rectangle(sc, nhh);
-//     rectangle(sc, nhhh);
+void HalfWindow(VGA_COLOR_TYPE color, int x, int y)
+{
+    // a rectangle is 16 pixels wide
+
+    rectangle(color, x, y);
+
+    int windowx = x+= 16;
+
+    console_gotoxy(windowx, y);
+
+    rectangle(color, windowx, y);
+
+//     int windowsx = windowx += 16;
+//
+//     rectangle(color, windowsx, y);
+}
+
+void Box(VGA_COLOR_TYPE color, int x, int y)
+{
+    HalfWindow(color, x, y);
+
+    int windowsy = y += 2;
+
+    console_gotoxy(x, windowsy);
+
+    HalfWindow(color, x, windowsy);
+
+    int windowsyy = windowsy += 2;
+
+    console_gotoxy(x, windowsyy);
+
+    HalfWindow(color, x, windowsyy);
+
+    int windowsyyy = windowsyy += 2;
+
+    console_gotoxy(x, windowsyyy);
+
+    HalfWindow(color, x, windowsyyy);
+}
+
+void Window(VGA_COLOR_TYPE color, int x, int y)
+{
+    Box(color, x, y);
+
+    int winy = y += 2;
+
+    console_gotoxy(x, winy);
+
+    Box(color, x, winy);
+
+    int winyy = winy += 2;
+
+    console_gotoxy(x, winyy);
+
+    Box(color, x, winyy);
+
+    int winyyy = winyy += 2;
+
+    console_gotoxy(x, winyyy);
+
+    Box(color, x, winyyy);
+
+    int winyyyy = winyyy += 2;
+
+    console_gotoxy(x, winyyyy);
+
+    Box(color, x, winyyyy);
+
+    int winyyyyy = winyyyy += 2;
+
+    console_gotoxy(x, winyyyyy);
+
+    Box(color, x, winyyyyy);
+
+    console_gotoxy(32, 4);
+    pixel(COLOR_RED);   // close button
+}
+
+void balls()
+{
+    g_vga_buffer[g_vga_index++] = vga_item_entry('b', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('a', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('l', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('l', COLOR_WHITE, COLOR_BLUE);
+    g_vga_buffer[g_vga_index++] = vga_item_entry('s', COLOR_WHITE, COLOR_BLUE);
 }
 
 // revert back the printed character and add 0 to it

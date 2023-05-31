@@ -23,5 +23,6 @@ typedef enum {
 } VgaColor;
 
 void InitVga(void);
+void PutPixel(VgaColor color, uint16_t x, uint16_t y);
 
 #endif

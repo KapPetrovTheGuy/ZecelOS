@@ -1,94 +1,77 @@
 /* 
- * vga.c - Very minimal text mode driver
- * Author(s) - amrix
+ * vga.c - Simple VGA graphics driver
+ * Author(s) - amrix, pritamzope
+ * Based on manuals and available source
  */
 
 #include <vga.h>
 #include <ports.h>
-#include <c/string.h>
 #include <stdint.h>
 
-#define VGA_ADDRESS 0xb8000
+uint8_t *vgaBuffer = (uint8_t *)0xa0000;
 
-static VgaColor bg = Black, fg = White;
-static uint8_t cursorX = 0, cursorY = 0;
+static uint8_t seqData[5] = {
+	0x03, 0x01, 0x0f, 0x00, 0x0e
+};
+static uint8_t crtcData[25] = {
+	0x5F, 0x4F, 0x50, 0x82, 0x54, 
+	0x80, 0xBF, 0x1F, 0x00, 0x41, 
+	0x00, 0x00, 0x00, 0x00, 0x00, 
+	0x00, 0x9C, 0x0E, 0x8F, 0x28,
+	0x40, 0x96, 0xB9, 0xA3, 0xFF
+};
+static uint8_t gcData[9] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 
+	0x40, 0x05, 0x0F, 0xFF
+};
+static uint8_t acData[21] = {
+	0x00, 0x01, 0x02, 0x03, 0x04, 
+	0x05, 0x06, 0x07, 0x08, 0x09, 
+	0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 
+	0x0F, 0x41, 0x00, 0x0F, 0x00,
+	0x00	
+};
 
-void SetColors(VgaColor _bg, VgaColor _fg)
+void Clear(VgaColor color)
 {
-	fg = _fg;
-	bg = _bg;
+	for(uint32_t i = 0; i < VGA_MAX; i++)
+    	vgaBuffer[i] = color;
 }
 
-void MoveCursor(uint8_t x, uint8_t y)
+void PutPixel(VgaColor color, uint16_t x, uint16_t y)
 {
-	outb(0x3d4, 14);
-	outb(0x3d5, (y * 80 + x) >> 8);
-	outb(0x3d4, 15);
-	outb(0x3d5, y * 80 + x);
-
-	cursorX = x;
-	cursorY = y;
+	vgaBuffer[VGA_WIDTH * y + x] = color;
 }
 
-void EnableCursor(void)
+void InitVga(void)
 {
-	outb(0x3d4, 0x0a);
-	outb(0x3d5, (inb(0x3d5) & 0xc0) | 0); 
-	outb(0x3d4, 0x0b);
-	outb(0x3d5, (inb(0x3d5) & 0xe0) | 0);
-}
+	outb(VGA_MISC_WRITE, 0x63);
 
-void DisableCursor(void)
-{
-	outb(0x3d4, 10);
-	outb(0x3d5, 32);
-}
-
-void BasicPutChar(char c, uint8_t x, uint8_t y)
-{
-	volatile uint16_t *where = 
-		(volatile uint16_t *)VGA_ADDRESS + (y * 80 + x);
-	*where = c | (((bg << 4) | (fg & 0x0f)) << 8);
-}
-
-void BasicPutStr(const char *str, uint8_t x, uint8_t y)
-{
-	for (int i = 0; i < StrLength(str); i++)
-		BasicPutChar(str[i], x + i, y);
-}
-
-void PutChar(char c)
-{
-	switch (c) {
-		case '\n':
-			if (cursorY > TEXTMODE_HEIGHT)
-				; // TODO
-			else {
-				cursorY++;
-				cursorX = 0;
-			}
-			break;
-		case '\r':
-			cursorX = 0;	
-			break;
-		case '\t':
-			cursorX += 4;
-			break;
-		default:
-            if (cursorX == TEXTMODE_WIDTH) {
-				cursorY++;
-				cursorX = 0;
-			}
-
-			BasicPutChar(c, cursorX++, cursorY);
-    		break;
+	// Sequencer
+	for (uint8_t i = 0; i < 5; i++) {
+		outb(VGA_SEQ_INDEX, i);
+		outb(VGA_SEQ_DATA, seqData[i]);
 	}
 
-	MoveCursor(cursorX, cursorY);
-}
+	// CRT Controller
+	for (uint8_t i = 0; i < 25; i++) {
+		outb(VGA_CRTC_INDEX, i);
+		outb(VGA_CRTC_DATA, crtcData[i]);
+	}
 
-void PutStr(const char *str)
-{
-	for (int i = 0; i < StrLength(str); i++)
-		PutChar(str[i]);
+	// Set Graphics Controller
+	for (uint8_t i = 0; i < 9; i++) {
+		outb(VGA_GC_INDEX, i);
+		outb(VGA_GC_DATA, gcData[i]);
+	}
+
+	// Set Attribute Controller
+	for (uint8_t i = 0; i < 21; i++) {
+		outb(VGA_AC_INDEX, i);
+		outb(VGA_AC_WRITE, acData[i]);
+	}
+
+	outb(VGA_AC_INDEX, inb(VGA_INSTAT_READ) | 0x20);
+
+	Clear(Black);
 }

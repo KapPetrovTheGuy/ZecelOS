@@ -4,14 +4,16 @@
  */
 
 #include <vga.h>
+#include <console.h>
 #include <idt.h>
+#include <isr.h>
 
 void CEntry(void) 
 {
-	EnableCursor();
-	PutStr("ZecelOS Kernel\n\n");
+	InitVga();
 
 	InstallIdt();
+	InstallIsr();
 
 	while (1)
 		asm volatile("hlt");

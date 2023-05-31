@@ -5,7 +5,7 @@
 
 KERNEL = kernel.elf
 OBJ = \
-	obj/entry.o obj/main.o obj/vga.o \
+	obj/entry.o obj/main.o obj/vga.o obj/graphics.o \
 	obj/ports.o obj/string.o obj/ctype.o
 
 NASM = nasm
@@ -35,6 +35,7 @@ build:
 	$(CC) $(CFLAGS) -c src/ports.c -o obj/ports.o
 	$(CC) $(CFLAGS) -c src/c/string.c -o obj/string.o
 	$(CC) $(CFLAGS) -c src/c/ctype.c -o obj/ctype.o
+	$(CC) $(CFLAGS) -c src/graphics.c -o obj/graphics.o
 	$(LD) $(LDFLAGS) -o $(KERNEL) $(OBJ)
 
 clean:

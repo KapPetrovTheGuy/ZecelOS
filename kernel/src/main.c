@@ -4,6 +4,7 @@
  */
 
 #include <vga.h>
+#include <graphics.h>
 
 void CEntry(void) 
 {

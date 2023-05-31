@@ -10,8 +10,6 @@
 
 #define VGA_ADDRESS 0xb8000
 
-static VgaColor fg = White, bg = Black;
-
 void SetColors(VgaColor _bg, VgaColor _fg)
 {
 	fg = _fg;

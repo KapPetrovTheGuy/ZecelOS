@@ -25,7 +25,7 @@ const char *exceptionMsgs[] = {
 	"Page fault",
 	"Unknown interrupt",
 	"Coprocessor fault",
-	"Alignment check"
+	"Alignment check",
 	"Machine check",
 	"Reserved"
 };

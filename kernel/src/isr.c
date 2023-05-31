@@ -4,9 +4,7 @@
  */
 
 #include <isr.h>
-#include <vga.h>
 
 void InstallIsr(void)
 {
-	PutStr("Installed ISRs\n");
 }

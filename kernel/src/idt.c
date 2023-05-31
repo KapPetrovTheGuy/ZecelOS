@@ -4,7 +4,6 @@
  */
 
 #include <idt.h>
-#include <vga.h>
 
 IdtEntry idt[256];
 IdtPointer idtPointer;
@@ -26,6 +25,4 @@ void InstallIdt(void)
 	idtPointer.base = (uint32_t)&idt;
 
 	IdtLoad();
-
-	PutStr("Installed IDT\n");
 }

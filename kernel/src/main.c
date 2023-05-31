@@ -11,9 +11,6 @@ void CEntry(void)
 {
 	InitVga();
 	
-EnableCursor();
-	PutStr("ZecelOS Kernel\n\n");
-
 	InstallIdt();
 	InstallIsr();
 

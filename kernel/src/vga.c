@@ -73,5 +73,5 @@ void InitVga(void)
 
 	outb(VGA_AC_INDEX, inb(VGA_INSTAT_READ) | 0x20);
 
-	Clear(Blue);
+	Clear(Black);
 }

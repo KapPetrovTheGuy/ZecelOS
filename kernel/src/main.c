@@ -11,12 +11,9 @@
 void CEntry(void) 
 {
 	InitVga();
-	
+
 	InstallIdt();
 	InstallIsr();
-
-	PutStr("New console in ZecelOS!\n");
-	PutStr("multiple lines test");
 
 	while (1)
 		asm volatile("hlt");

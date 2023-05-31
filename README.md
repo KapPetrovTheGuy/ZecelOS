@@ -9,6 +9,7 @@ CelOS: CelOS is a CLI OS Developed By Vincent.
 ZeqOS-R: ZeqOS-R Is a GUI OS Based on a VBA-OS created in Powerpoint.
 
 # How to contribute?
+Read the [contribution rules](doc/CONTRIBUTING.md)
 Join our discord, https://discord.gg/XKJHHJe5cj
 
 # Why?
@@ -24,4 +25,4 @@ C, NASM Syntax Assembly.
 1. Kap Petrov, Programmer, Main Lead.
 2. Vincent., Designer, CelOS Developer.
 3. GZB, Designer.
-4. Amrix, Programmer.
+4. amrix, Programmer.

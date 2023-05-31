@@ -6,7 +6,7 @@
 ISO = ZecelOS.iso
 
 VM = qemu-system-x86_64
-VMFLAGS = -m 16M
+VMFLAGS = -monitor stdio -m 16M
 
 all: iso run clean
 

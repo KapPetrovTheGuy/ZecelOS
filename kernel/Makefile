@@ -8,7 +8,7 @@ OBJ = \
 	obj/entry.o obj/main.o obj/vga.o \
 	obj/ports.o obj/string.o obj/ctype.o \
 	obj/idta.o obj/idtc.o obj/isr.o \
-	obj/font.o
+	obj/font.o obj/console.o
 
 NASM = nasm
 CC = clang
@@ -35,6 +35,7 @@ build:
 	$(CC) $(CFLAGS) -c src/main.c -o obj/main.o
 	$(CC) $(CFLAGS) -c src/vga.c -o obj/vga.o
 	$(CC) $(CFLAGS) -c src/font.c -o obj/font.o
+	$(CC) $(CFLAGS) -c src/console.c -o obj/console.o
 	$(CC) $(CFLAGS) -c src/ports.c -o obj/ports.o
 	$(CC) $(CFLAGS) -c src/c/string.c -o obj/string.o
 	$(CC) $(CFLAGS) -c src/c/ctype.c -o obj/ctype.o

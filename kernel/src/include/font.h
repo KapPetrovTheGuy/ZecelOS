@@ -4,6 +4,8 @@
 #include <vga.h>
 #include <stdint.h>
 
+#define FONT_DIM 8
+
 // Toshiba 8x8 font
 static const uint8_t fontData[2048] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -264,6 +266,6 @@ static const uint8_t fontData[2048] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-void PutChar(char c, uint16_t x, uint16_t y, VgaColor fg, VgaColor bg);
+void BasicPutChar(char c, uint16_t x, uint16_t y, VgaColor fg, VgaColor bg);
 
 #endif

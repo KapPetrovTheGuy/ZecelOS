@@ -4,7 +4,7 @@
  */
 
 #include <vga.h>
-#include <font.h>
+#include <console.h>
 #include <idt.h>
 #include <isr.h>
 
@@ -15,7 +15,8 @@ void CEntry(void)
 	InstallIdt();
 	InstallIsr();
 
-	PutChar('T', 10, 10, Red, Black);
+	PutStr("New console in ZecelOS!\n");
+	PutStr("multiple lines test");
 
 	while (1)
 		asm volatile("hlt");

@@ -27,7 +27,7 @@ void MoveCursor(uint8_t x, uint8_t y);
 void EnableCursor(void);
 void DisableCursor(void);
 uint16_t GetCursorPosition(void);
-int PutChar(char c, uint8_t x, uint8_t y);
-int PutStr(char *str, uint8_t x, uint8_t y);
+void VgaPutChar(char c, uint8_t x, uint8_t y);
+void VgaPutStr(char *str, uint8_t x, uint8_t y);
 
 #endif

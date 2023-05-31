@@ -50,23 +50,15 @@ uint16_t GetCursorPosition(void)
 	return position;
 }
 
-int PutChar(char c, uint8_t x, uint8_t y)
+void VgaPutChar(char c, uint8_t x, uint8_t y)
 {
-	if (c == '\n' || c == '\r' || c == '\b')
-		return 1;
-
 	volatile uint16_t *where = 
 		(volatile uint16_t *)VGA_ADDRESS + (y * 80 + x);
 	*where = c | (((bg << 4) | (fg & 0x0f)) << 8);
-
-	return 0;
 }
 
-int PutStr(char *str, uint8_t x, uint8_t y)
+void VgaPutStr(char *str, uint8_t x, uint8_t y)
 {
 	for (int i = 0; i < StrLength(str); i++)
-		if (PutChar(str[i], x + i, y))
-			return 1;
-	
-	return 0;
+		VgaPutChar(str[i], x + i, y)
 }

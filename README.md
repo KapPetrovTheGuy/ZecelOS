@@ -1,28 +1,17 @@
 # ZecelOS
-An Operating System With A GUI, Written In C And NASM Assembly.
-Its a combination between these 2 OSES:
-ZeqOS-R,
-CelOS
-
-# Context
-CelOS: CelOS is a CLI OS Developed By Vincent.
-ZeqOS-R: ZeqOS-R Is a GUI OS Based on a VBA-OS created in Powerpoint.
-
-# How to contribute?
-Read the [contribution rules](doc/CONTRIBUTING.md)
-Join our discord, https://discord.gg/XKJHHJe5cj
-
-# Why?
-Because its fun!
-
-# What languages?
-C, NASM Syntax Assembly.
-
-# Image?
 ![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/0aef9f14-0cde-4551-90a6-dbfa2b8ac97c)
 
-# Developers Names?
-1. Kap Petrov, Programmer, Main Lead.
-2. Vincent., Designer, CelOS Developer.
-3. GZB, Designer.
-4. amrix, Programmer, Co-lead
+# What is it
+ZecelOS is a tiny OS written in C and Assembly.
+It is an OS just for fun and not inteded to be
+serious.
+
+# Contributing
+Read the [contribution rules](doc/CONTRIBUTING.md)
+Also join the [Discord](https://discord.gg/XKJHHJe5cj)
+
+# Developers
+* Kap Petrov, Programmer, Main Lead
+* Vincent, Designer, CelOS Developer
+* GZB, Designer
+* amrix, Programmer, Co-lead

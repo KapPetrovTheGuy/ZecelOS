@@ -3,7 +3,7 @@
 
 # What is it
 ZecelOS is a tiny OS written in C and Assembly.
-It is an OS just for fun and not inteded to be
+It is an OS just for fun and not intended to be
 serious.
 
 # Contributing

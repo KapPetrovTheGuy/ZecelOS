@@ -60,5 +60,5 @@ void VgaPutChar(char c, uint8_t x, uint8_t y)
 void VgaPutStr(char *str, uint8_t x, uint8_t y)
 {
 	for (int i = 0; i < StrLength(str); i++)
-		VgaPutChar(str[i], x + i, y)
+		VgaPutChar(str[i], x + i, y);
 }

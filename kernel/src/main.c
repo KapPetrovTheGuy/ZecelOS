@@ -9,7 +9,7 @@ void CEntry(void)
 {
 	EnableCursor();
 
-	PutStr("Test string!", 0, 0);
+	VgaPutStr("Test string!", 10, 10);
 
 	while (1)
 		asm volatile("hlt");

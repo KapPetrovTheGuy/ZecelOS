@@ -4,13 +4,14 @@
  */
 
 #include <vga.h>
-#include <graphics.h>
+#include <idt.h>
 
 void CEntry(void) 
 {
 	EnableCursor();
+	PutStr("ZecelOS Kernel\n\n");
 
-	VgaPutStr("Test string!", 10, 10);
+	InstallIdt();
 
 	while (1)
 		asm volatile("hlt");

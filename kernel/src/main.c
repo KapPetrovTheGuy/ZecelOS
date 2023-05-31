@@ -7,11 +7,13 @@
 #include <console.h>
 #include <idt.h>
 #include <isr.h>
+#include "hal/hal.h"
 
 void CEntry(void) 
 {
 	InitVga();
 
+	HAL_Initialize();
 	InstallIdt();
 	InstallIsr();
 

@@ -25,4 +25,4 @@ C, NASM Syntax Assembly.
 1. Kap Petrov, Programmer, Main Lead.
 2. Vincent., Designer, CelOS Developer.
 3. GZB, Designer.
-4. amrix, Programmer.
+4. amrix, Programmer, Co-lead

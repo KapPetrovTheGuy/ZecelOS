@@ -32,10 +32,10 @@ static uint8_t acData[21] = {
 	0x00	
 };
 
-void Clear(void)
+void Clear(VgaColor color)
 {
 	for(uint32_t i = 0; i < VGA_MAX; i++)
-    	vgaBuffer[i] = 0;
+    	vgaBuffer[i] = color;
 }
 
 void PutPixel(VgaColor color, uint16_t x, uint16_t y)
@@ -73,5 +73,5 @@ void InitVga(void)
 
 	outb(VGA_AC_INDEX, inb(VGA_INSTAT_READ) | 0x20);
 
-	Clear();
+	Clear(Blue);
 }

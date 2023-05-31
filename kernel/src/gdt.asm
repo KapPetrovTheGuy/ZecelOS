@@ -1,8 +1,12 @@
+;
+; gdt.asm - Load the GDT
+; Author(s) - KapPetrov, amrix
+;
+
 [bits 32]
 
-global i686_GDT_Load
-
-i686_GDT_Load:
+global GdtLoad
+GdtLoad:
     push ebp
     mov ebp, esp
 
@@ -11,11 +15,10 @@ i686_GDT_Load:
 
     mov eax, [ebp + 12]
     push eax
-    push .reload_cs
-    retf
+    push .ReloadCS
+	retf
 
-.reload_cs:
-
+.ReloadCS:
     mov ax, [ebp + 16]
     mov ds, ax
     mov es, ax

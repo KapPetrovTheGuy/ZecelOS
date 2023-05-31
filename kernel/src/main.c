@@ -5,18 +5,18 @@
 
 #include <vga.h>
 #include <console.h>
+#include <gdt.h>
 #include <idt.h>
 #include <isr.h>
-#include "hal/hal.h"
 
 void CEntry(void) 
 {
 	InitVga();
 
-	HAL_Initialize();
+	//InstallGdt();	
 	InstallIdt();
 	InstallIsr();
-
+	
 	while (1)
 		asm volatile("hlt");
 }

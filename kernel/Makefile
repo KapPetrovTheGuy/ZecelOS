@@ -5,10 +5,11 @@
 
 KERNEL = kernel.elf
 OBJ = \
-	obj/entry.o obj/gdta.o obj/gdt.o obj/hal.o obj/main.o obj/vga.o \
-	obj/ports.o obj/string.o obj/ctype.o \
-	obj/idta.o obj/idtc.o obj/isr.o \
-	obj/font.o obj/console.o
+	obj/entry.o obj/gdta.o obj/gdt.o \
+	obj/main.o obj/vga.o obj/ports.o \
+	obj/string.o obj/ctype.o obj/idta.o \
+	obj/idtc.o obj/isr.o obj/font.o \
+	obj/console.o
 
 NASM = nasm
 CC = clang
@@ -44,7 +45,6 @@ build:
 	$(CC) $(CFLAGS) -c src/isr.c -o obj/isr.o
 	$(NASM) $(NASMFLAGS) src/gdt.asm -o obj/gdta.o
 	$(CC) $(CFLAGS) -c src/gdt.c -o obj/gdt.o
-	$(CC) $(CFLAGS) -c src/hal/hal.c -o obj/hal.o
 	$(LD) $(LDFLAGS) -o $(KERNEL) $(OBJ)
 
 clean:

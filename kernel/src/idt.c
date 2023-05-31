@@ -24,7 +24,6 @@ void InstallIdt(void)
 	idtPointer.base = (uint32_t)&idt;
 
 	asm volatile("lidt %0" : : "m"(idtPointer));
-	asm volatile("sti");
 
 	PutStr("Installed IDT\n");
 }

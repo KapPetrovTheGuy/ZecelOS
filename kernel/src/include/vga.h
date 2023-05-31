@@ -36,27 +36,8 @@
 // General Control and Status Registers
 #define	VGA_INSTAT_READ 0x3da
 
-typedef enum {
-    BLACK = 0,
-    BLUE,
-    GREEN,
-    CYAN,
-    RED,
-    MAGENTA,
-    BROWN,
-    LIGHTGRAY,
-    DARKGRAY,
-    LIGHTBLUE,
-    LIGHTGREEN,
-    LIGHTCYAN,
-    LIGHTRED,
-    LIGHTMAGENTA,
-    YELLOW,
-    WHITE
-} VgaColor;
-
-void PutPixel(VgaColor color, uint16_t x, uint16_t y);
-void Clear(VgaColor color);
+void PutPixel(uint8_t color, uint16_t x, uint16_t y);
+void Clear(uint8_t color);
 void InitVga(void);
 
 #endif

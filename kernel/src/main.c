@@ -17,9 +17,6 @@ void CEntry(void)
 	InstallIdt();
 	InstallIsr();
 
-	//char *a = 0;
-	//*a = 10;
-
 	while (1)
 		asm volatile("hlt");
 }

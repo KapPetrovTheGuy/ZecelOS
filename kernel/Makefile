@@ -7,7 +7,7 @@ KERNEL = kernel.elf
 OBJ = \
 	obj/entry.o obj/main.o obj/vga.o \
 	obj/ports.o obj/string.o obj/ctype.o \
-	obj/idta.o obj/idtc.o
+	obj/idta.o obj/idtc.o obj/isr.o
 
 NASM = nasm
 CC = clang
@@ -38,6 +38,7 @@ build:
 	$(CC) $(CFLAGS) -c src/c/ctype.c -o obj/ctype.o
 	$(CC) $(CFLAGS) -c src/idt.c -o obj/idtc.o
 	$(NASM) $(NASMFLAGS) src/idt.asm -o obj/idta.o
+	$(CC) $(CFLAGS) -c src/isr.c -o obj/isr.o
 	$(LD) $(LDFLAGS) -o $(KERNEL) $(OBJ)
 
 clean:

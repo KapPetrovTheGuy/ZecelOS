@@ -3,9 +3,6 @@
 
 #include <stdint.h>
 
-#define TEXTMODE_WIDTH 80
-#define TEXTMODE_HEIGHT 25
-
 typedef enum {
 	Black = 0,
 	Blue,
@@ -25,13 +22,6 @@ typedef enum {
 	White
 } VgaColor;
 
-void SetColors(VgaColor fg, VgaColor bg);
-void MoveCursor(uint8_t x, uint8_t y);
-void EnableCursor(void);
-void DisableCursor(void);
-void BasicPutChar(char c, uint8_t x, uint8_t y);
-void BasicPutStr(const char *str, uint8_t x, uint8_t y);
-void PutChar(char c);
-void PutStr(const char *str);
+void InitVga(void);
 
 #endif

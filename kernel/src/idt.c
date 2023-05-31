@@ -9,8 +9,6 @@
 IdtEntry idt[256];
 IdtPointer idtPointer;
 
-extern void IdtLoad();
-
 void SetIdtGate(uint8_t n, uint32_t base, uint16_t sel, uint8_t flags)
 {
 	idt[n].baseLow = base & 0xffff;
@@ -25,7 +23,8 @@ void InstallIdt(void)
 	idtPointer.limit = (sizeof(IdtEntry) * 256) - 1;
 	idtPointer.base = (uint32_t)&idt;
 
-	IdtLoad();
+	asm volatile("lidt %0" : : "m"(idtPointer));
+	asm volatile("sti");
 
 	PutStr("Installed IDT\n");
 }

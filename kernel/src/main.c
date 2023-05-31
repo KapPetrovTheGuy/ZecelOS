@@ -4,13 +4,11 @@
  */
 
 #include <vga.h>
-#include <graphics.h>
 
 void CEntry(void) 
 {
 	EnableCursor();
-
-	VgaPutStr("Test string!", 10, 10);
+	PutStr("ZecelOS Kernel\n\n");
 
 	while (1)
 		asm volatile("hlt");

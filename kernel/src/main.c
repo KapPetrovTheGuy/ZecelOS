@@ -14,6 +14,8 @@ void CEntry(void)
 	InstallIdt();
 	InstallIsr();
 
+	PutPixel(LightRed, 10, 10);
+
 	while (1)
 		asm volatile("hlt");
 }

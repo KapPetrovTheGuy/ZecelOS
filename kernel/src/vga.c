@@ -40,7 +40,7 @@ void Clear(void)
 
 void PutPixel(VgaColor color, uint16_t x, uint16_t y)
 {
-	color = x = y;
+	vgaBuffer[VGA_WIDTH * y + x] = color;
 }
 
 void InitVga(void)
@@ -72,4 +72,6 @@ void InitVga(void)
 	}
 
 	outb(VGA_AC_INDEX, inb(VGA_INSTAT_READ) | 0x20);
+
+	Clear();
 }

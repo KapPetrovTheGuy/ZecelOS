@@ -13,7 +13,7 @@ void CEntry(void)
 {
 	InitVga();
 
-	//InstallGdt();	
+	InstallGdt();	
 	InstallIdt();
 	InstallIsr();
 	

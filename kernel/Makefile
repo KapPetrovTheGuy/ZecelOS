@@ -22,7 +22,6 @@ CFLAGS = \
 	-ffreestanding \
 	-Wall \
 	-Wextra \
-	-Werror \
 	-O2
 LDFLAGS = \
 	-m elf_i386 \
@@ -40,7 +39,7 @@ build:
 	$(CC) $(CFLAGS) -c src/c/string.c -o obj/string.o
 	$(CC) $(CFLAGS) -c src/c/ctype.c -o obj/ctype.o
 	$(CC) $(CFLAGS) -c src/idt.c -o obj/idt.o
-	$(CC) $(CFLAGS) -c src/isr.c -o obj/isr.o
+	$(CC) $(CFLAGS) -c src/isr.c -o obj/isrc.o
 	$(NASM) $(NASMFLAGS) src/gdt.asm -o obj/gdta.o
 	$(CC) $(CFLAGS) -c src/gdt.c -o obj/gdtc.o
 	$(LD) $(LDFLAGS) -o $(KERNEL) $(OBJ)

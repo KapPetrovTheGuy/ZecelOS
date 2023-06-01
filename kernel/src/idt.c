@@ -6,8 +6,8 @@
 #include <idt.h>
 #include <console.h>
 
-IdtEntry idt[256];
-IdtPointer idtPointer;
+static IdtEntry idt[256];
+static IdtPointer idtPointer;
 
 void SetIdtGate(uint8_t n, uint32_t base, uint16_t sel, uint8_t flags)
 {

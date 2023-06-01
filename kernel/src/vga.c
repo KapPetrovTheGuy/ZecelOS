@@ -50,19 +50,19 @@ void InitVga(void)
 	// Sequencer
 	for (uint8_t i = 0; i < 5; i++) {
 		outb(VGA_SEQ_INDEX, i);
-		outb(VGA_SEQ_DATA, seqData[i]);
+		outb(VGA_SEQ_DATA,  seqData[i]);
 	}
 
 	// CRT Controller
 	for (uint8_t i = 0; i < 25; i++) {
 		outb(VGA_CRTC_INDEX, i);
-		outb(VGA_CRTC_DATA, crtcData[i]);
+		outb(VGA_CRTC_DATA,  crtcData[i]);
 	}
 
 	// Set Graphics Controller
 	for (uint8_t i = 0; i < 9; i++) {
 		outb(VGA_GC_INDEX, i);
-		outb(VGA_GC_DATA, gcData[i]);
+		outb(VGA_GC_DATA,  gcData[i]);
 	}
 
 	// Set Attribute Controller

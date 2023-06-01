@@ -32,13 +32,13 @@ static uint8_t acData[21] = {
 	0x00	
 };
 
-void Clear(VgaColor color)
+void Clear(uint8_t color)
 {
 	for(uint32_t i = 0; i < VGA_MAX; i++)
     	vgaBuffer[i] = color;
 }
 
-void PutPixel(VgaColor color, uint16_t x, uint16_t y)
+void PutPixel(uint8_t color, uint16_t x, uint16_t y)
 {
 	vgaBuffer[VGA_WIDTH * y + x] = color;
 }
@@ -50,19 +50,19 @@ void InitVga(void)
 	// Sequencer
 	for (uint8_t i = 0; i < 5; i++) {
 		outb(VGA_SEQ_INDEX, i);
-		outb(VGA_SEQ_DATA, seqData[i]);
+		outb(VGA_SEQ_DATA,  seqData[i]);
 	}
 
 	// CRT Controller
 	for (uint8_t i = 0; i < 25; i++) {
 		outb(VGA_CRTC_INDEX, i);
-		outb(VGA_CRTC_DATA, crtcData[i]);
+		outb(VGA_CRTC_DATA,  crtcData[i]);
 	}
 
 	// Set Graphics Controller
 	for (uint8_t i = 0; i < 9; i++) {
 		outb(VGA_GC_INDEX, i);
-		outb(VGA_GC_DATA, gcData[i]);
+		outb(VGA_GC_DATA,  gcData[i]);
 	}
 
 	// Set Attribute Controller
@@ -73,5 +73,5 @@ void InitVga(void)
 
 	outb(VGA_AC_INDEX, inb(VGA_INSTAT_READ) | 0x20);
 
-	Clear(BLACK);
+	Clear(0);
 }

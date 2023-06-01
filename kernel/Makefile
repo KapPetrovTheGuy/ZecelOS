@@ -5,11 +5,10 @@
 
 KERNEL = kernel.elf
 OBJ = \
-	obj/entry.o obj/gdta.o obj/gdt.o \
+	obj/entry.o obj/gdta.o obj/gdtc.o \
 	obj/main.o obj/vga.o obj/ports.o \
-	obj/string.o obj/ctype.o obj/idta.o \
-	obj/idtc.o obj/isr.o obj/font.o \
-	obj/console.o
+	obj/string.o obj/ctype.o obj/idt.o \
+	obj/isr.o obj/font.o obj/console.o
 
 NASM = nasm
 CC = clang
@@ -23,7 +22,6 @@ CFLAGS = \
 	-ffreestanding \
 	-Wall \
 	-Wextra \
-	-Werror \
 	-O2
 LDFLAGS = \
 	-m elf_i386 \
@@ -40,11 +38,10 @@ build:
 	$(CC) $(CFLAGS) -c src/ports.c -o obj/ports.o
 	$(CC) $(CFLAGS) -c src/c/string.c -o obj/string.o
 	$(CC) $(CFLAGS) -c src/c/ctype.c -o obj/ctype.o
-	$(CC) $(CFLAGS) -c src/idt.c -o obj/idtc.o
-	$(NASM) $(NASMFLAGS) src/idt.asm -o obj/idta.o
-	$(CC) $(CFLAGS) -c src/isr.c -o obj/isr.o
+	$(CC) $(CFLAGS) -c src/idt.c -o obj/idt.o
+	$(CC) $(CFLAGS) -c src/isr.c -o obj/isrc.o
 	$(NASM) $(NASMFLAGS) src/gdt.asm -o obj/gdta.o
-	$(CC) $(CFLAGS) -c src/gdt.c -o obj/gdt.o
+	$(CC) $(CFLAGS) -c src/gdt.c -o obj/gdtc.o
 	$(LD) $(LDFLAGS) -o $(KERNEL) $(OBJ)
 
 clean:

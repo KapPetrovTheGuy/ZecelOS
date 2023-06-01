@@ -32,18 +32,17 @@ const char *exceptionMsgs[] = {
 
 void InstallIsr(void)
 {
-	// TODO - Finish ISR
 	PutStr("Installed ISRs\n");
 }
 
-void CFaultHandler(uint8_t exN)
+void CFaultHandler(int interrupt)
 {
-	if (exN < 32) {
-		Clear(RED);
+	if (interrupt < 32) {
+		Clear(1);
 		PutStr("ISR Execption : ");
-		PutStr(exceptionMsgs[exN]);
+		PutStr(exceptionMsgs[interrupt]);
 	}
 
 	while (1)
-		asm volatile("hlt");
+		asm volatile("cli; hlt");
 }

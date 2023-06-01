@@ -7,7 +7,7 @@
 #include <vga.h>
 #include <stdint.h>
 
-void BasicPutChar(char c, uint16_t x, uint16_t y, VgaColor fg, VgaColor bg)
+void BasicPutChar(char c, uint16_t x, uint16_t y, uint8_t fg, uint8_t bg)
 {
 	int mask[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 	uint8_t *glyph = (uint8_t *)(fontData + (int)c * FONT_DIM);

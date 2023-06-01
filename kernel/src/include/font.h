@@ -1,7 +1,6 @@
 #ifndef FONT_H
 #define FONT_H
 
-#include <vga.h>
 #include <stdint.h>
 
 #define FONT_DIM 8
@@ -266,6 +265,6 @@ static const uint8_t fontData[2048] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-void BasicPutChar(char c, uint16_t x, uint16_t y, VgaColor fg, VgaColor bg);
+void BasicPutChar(char c, uint16_t x, uint16_t y, uint8_t fg, uint8_t bg);
 
 #endif

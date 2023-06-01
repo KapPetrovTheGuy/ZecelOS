@@ -9,7 +9,7 @@
 #include <c/string.h>
 
 static uint16_t cursorX = 0, cursorY = 0;
-static VgaColor fg = WHITE, bg = BLACK;
+static uint8_t fg = 63, bg = 0;
 
 void PutChar(char c)
 {

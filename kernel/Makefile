@@ -8,7 +8,7 @@ OBJ = \
 	obj/entry.o obj/gdta.o obj/gdtc.o \
 	obj/main.o obj/vga.o obj/ports.o \
 	obj/string.o obj/ctype.o obj/idt.o \
-	obj/isrc.o obj/font.o obj/console.o obj/pmm.o
+	obj/isrc.o obj/font.o obj/console.o obj/pmm.o obj/irq.o #obj/exceptions.o
 
 NASM = nasm
 CC = clang
@@ -43,6 +43,7 @@ build:
 	$(NASM) $(NASMFLAGS) src/gdt.asm -o obj/gdta.o
 	$(CC) $(CFLAGS) -c src/gdt.c -o obj/gdtc.o
 	$(CC) $(CFLAGS) -c src/pmm.c -o obj/pmm.o
+	$(CC) $(CFLAGS) -c src/irq.c -o obj/irq.o
 	$(LD) $(LDFLAGS) -o $(KERNEL) $(OBJ)
 
 clean:

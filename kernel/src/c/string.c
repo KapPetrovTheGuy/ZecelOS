@@ -76,6 +76,45 @@ void StrConcat(char *dest, const char *src)
 	*end = '\0';
 }
 
+void uint32ToString(uint32_t number, char* buffer, unsigned int  bufferSize) {
+    // Handle special case for zero
+    if (number == 0) {
+        if (bufferSize >= 2) {
+            buffer[0] = '0';
+            buffer[1] = '\0';
+        }
+        return;
+    }
+
+    // Determine the length of the string
+    unsigned int length = 0;
+    uint32_t temp = number;
+    while (temp > 0) {
+        temp /= 10;
+        length++;
+    }
+
+    // Check if buffer size is sufficient
+    if (bufferSize < length + 1) {
+        // Buffer is too small, handle the error
+        // (e.g., print an error message or truncate the string)
+        return;
+    }
+
+    // Convert the number to string in reverse order
+    unsigned int index = length - 1;
+    while (number > 0) {
+        uint32_t digit = number % 10;
+        buffer[index] = '0' + digit;
+        number /= 10;
+        index--;
+    }
+
+    // Add null terminator at the end
+    buffer[length] = '\0';
+}
+
+
 /* Better implementations could be found
 
 int isspace(char c) {

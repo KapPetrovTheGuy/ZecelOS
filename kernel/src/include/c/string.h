@@ -10,5 +10,6 @@ int StrLength(const char *s);
 int StrCompare(const char *s1, char *s2);
 int StrCopy(char *dst, const char *src);
 void StrConcat(char *dest, const char *src);
+void uint32ToString(uint32_t number, char* buffer, unsigned int bufferSize);
 
 #endif

@@ -10,6 +10,11 @@ typedef struct {
   uint32_t eip, cs, eflags, useresp, ss;
 } Registers;
 
+typedef void (*InterruptHandler)(void);
+
 void InstallIsr(void);
+void SetInterruptHandler(uint8_t interruptNumber, InterruptHandler handler);
+void EnableInterrupt(uint8_t interruptNumber);
+
 
 #endif

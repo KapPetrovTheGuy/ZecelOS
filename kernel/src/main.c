@@ -15,35 +15,36 @@ void CEntry(void)
 {
 	InitVga();
 
-	Clear(mColor);
+	Clear(0);
+
+	PutISRExceptionStr("Booting ZecelOS... \n", 0);
 
 	InstallGdt();
 	InitIdt32();
 
-    //  int quotient;
-    //  int remainder;
-    //  int dividend = 10;
-    //  int divisor = 3;
-
 	SetIDTDescriptor32(0, DivBy0Handler, TRAP_GATE_FLAGS);
 	SetIDTDescriptor32(0x80, SyscallDispatcher, INT_GATE_USER_FLAGS);
-	//asm volatile("divl %0, %2" : "=a" (quotient), "=d" (remainder) : "r" (dividend), "r" (divisor));
 
 	// tests, uncomment these lines if you want to test.
-	__asm__ __volatile__ ("movl $0, %eax; int $0x80"); //syscall 0
-	__asm__ __volatile__ ("movl $1, %eax; int $0x80"); // syscall 1
-
-	__asm__ __volatile__ ("movl $2, %eax; int $0x80"); // Should do nothing at all lmao.
-
-	DisablePIC();
+	//__asm__ __volatile__ ("movl $0, %eax; int $0x80"); //syscall 0
+	//__asm__ __volatile__ ("movl $1, %eax; int $0x80"); // syscall 1
 
 	RemapPIC();
 
-	// ClearIRQMask(0);
+	SetIDTDescriptor32(0x20, TimerIRQ0Handler, INT_GATE_FLAGS);
+	//SetIDTDescriptor32(0x21, <KeyboardIRQHandler>, INT_GATE_FLAGS);
+	//SetIDTDescriptor32(0x28, <CmosRtcIRQ8Handler>, INT_GATE_FLAGS);
+
+	ClearIRQMask(0);
 	// ClearIRQMask(1);
 
-	//SetIDTDescriptor32(0x20, <TimerIRQHandler>, INT_GATE_FLAGS);
-	//SetIDTDescriptor32(0x21, <KeyboardIRQHandler>, INT_GATE_FLAGS);
+	SetPITChannelModeFrequency(0, 2, 1193);
+
+	SleepSeconds(5);
+
+	Clear(mColor);
+
+	PutStr("Welcome To ZecelOS!\n");
 
 	__asm__ __volatile__ ("sti");
 

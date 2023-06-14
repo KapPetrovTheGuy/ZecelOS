@@ -94,5 +94,4 @@ void __attribute__((cdecl)) GdtLoad(GdtDescriptor* descriptor, uint16_t codeSegm
 void InstallGdt(void)
 {
     GdtLoad(&gdtDescriptor, i686_GDT_CODE_SEGMENT, i686_GDT_DATA_SEGMENT);
-	PutStr("Installed GDT\n");
 }

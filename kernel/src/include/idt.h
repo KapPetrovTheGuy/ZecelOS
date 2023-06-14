@@ -98,6 +98,5 @@ void InitIdt32(void)
 	}
 
 	__asm__ volatile ("lidt %0" : : "memory"(idtr32));
-	PutStr("Installed IDT \r\n");
     //__asm__ volatile ("sti");
 }

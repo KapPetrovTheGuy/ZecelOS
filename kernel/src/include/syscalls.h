@@ -6,8 +6,10 @@
 #pragma once
 
 #include <console.h>
+#include <stdint.h>
 
-#define MAX_SYSCALLS        2
+#define MAX_SYSCALLS        3
+#define IRQ0_SLEEP_TIMER_TICKS_AREA				0x1700
 
 
 
@@ -22,18 +24,32 @@ void SyscallTest1(void)
     PutStr("SYSCALL TEST 1\r\n");
 }
 
+// INPUTS:
+// EBX = NUMBER OF MILLISECONDS TO SLEEP
+
+void SyscallSleep(void)
+{
+     uint32_t *sleepTimerTicks = (uint32_t *)IRQ0_SLEEP_TIMER_TICKS_AREA;
+
+     __asm__ __volatile__ ("movl %%ebx, %0" : "=r"(*sleepTimerTicks) );
+
+     while (*sleepTimerTicks > 0) __asm__ __volatile__ ("sti;hlt;cli");
+     
+}
+
 // Syscalls table
 
 void *syscalls[MAX_SYSCALLS] = {
     SyscallTest0,
-    SyscallTest1
+    SyscallTest1,
+    SyscallSleep
 };
 
 __attribute__ ((naked)) void SyscallDispatcher(void)
 {
      __asm__ __volatile__ (".intel_syntax noprefix\n"
 
-                          ".equ MAX_SYSCALLS, 2\n"
+                          ".equ MAX_SYSCALLS, 3\n"
 
                           "cmp eax, MAX_SYSCALLS-1\n"  
                           "ja invalid_syscall\n"        

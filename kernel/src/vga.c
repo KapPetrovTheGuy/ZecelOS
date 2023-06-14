@@ -7,6 +7,7 @@
 #include <vga.h>
 #include <ports.h>
 #include <stdint.h>
+#include <console.h>
 
 uint8_t *vgaBuffer = (uint8_t *)0xa0000;
 

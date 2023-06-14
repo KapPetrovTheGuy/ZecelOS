@@ -8,22 +8,27 @@
 #include <stdint.h>
 #include <ports.h>
 #include <console.h>
+#include <idt.h>
+#include <c/string.h>
+#include <stdbool.h>
 
-#define PIC_1_CMD			0x20
-#define PIC_1_DATA			0x21
+#define PIC_1_CMD								0x20
+#define PIC_1_DATA								0x21
 
-#define PIC_2_CMD			0xA0
-#define PIC_2_DATA			0xA1
+#define PIC_2_CMD								0xA0
+#define PIC_2_DATA								0xA1
 
-#define NEW_IRQ_0			0x20
-#define NEW_IRQ_8			0x28
+#define NEW_IRQ_0								0x20
+#define NEW_IRQ_8								0x28
 
-#define PIC_EOI				0x20
+#define PIC_EOI									0x20
+
+#define IRQ0_SLEEP_TIMER_TICKS_AREA				0x1700
 
 void SendPICEOI(uint8_t irq)
 {
-	if (irq >= 8)
-		outb(PIC_2_CMD, PIC_EOI);
+	if (irq >= 8) outb(PIC_2_CMD, PIC_EOI);
+
 	outb(PIC_1_CMD, PIC_EOI);
 }
 
@@ -31,8 +36,6 @@ void DisablePIC()
 {
 	outb(PIC_2_DATA, 0xFF);
 	outb(PIC_1_DATA, 0xFF);
-
-	PutStr("PIC Disabled\r\n");
 }
 
 void SetIRQMask(uint8_t irq)
@@ -96,6 +99,50 @@ void RemapPIC(void)
 
 	outb(PIC_1_DATA, PIC1Mask);
 	outb(PIC_2_DATA, PIC2Mask);
+}
 
-	PutStr("PIC Remapped\r\n");
+static volatile uint32_t ticks = 0;
+
+void SleepMilliseconds(uint32_t milliseconds)
+{
+    uint32_t start_ticks = ticks;
+    while ((ticks - start_ticks) < milliseconds)
+    {
+        __asm__ __volatile__ ("hlt");
+    }
+}
+
+void SleepSeconds(uint16_t seconds)
+{
+    SleepMilliseconds(seconds * 1000);
+}
+
+__attribute__ ((interrupt)) void TimerIRQ0Handler(IntFrame32T *frame)
+{
+	// char buffer[20];
+
+	// PutStr("Timer seconds: ");
+
+	// uint32_t seconds = ticks / 1000;  // Convert ticks to seconds
+    // uint32ToString(seconds, buffer, sizeof(buffer));
+
+    // PutStr(buffer);
+    // PutStr("\r");
+    ticks++;
+
+	SendPICEOI(0);
+}
+
+void SetPITChannelModeFrequency(const uint8_t channel, const uint8_t operatingMode, const uint16_t freq)
+{
+	if (channel > 2 || operatingMode > 7) return;
+	
+	__asm__ __volatile__ ("cli");
+
+	outb(0x43, (channel << 6) | (0x3 << 4) | (operatingMode << 1));
+
+	outb(0x40 + channel, (uint8_t)freq);
+	outb(0x40 + channel, (uint8_t)(freq >> 8));
+
+	__asm__ __volatile__ ("sti");
 }

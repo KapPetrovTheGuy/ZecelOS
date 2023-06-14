@@ -17,7 +17,12 @@ void CEntry(void)
 
 	Clear(0);
 
-	PutISRExceptionStr("Booting ZecelOS... \n", 0);
+	PutISRExceptionStr(" __________\r\n", 0);
+	PutISRExceptionStr("         _ \r\n", 0);
+	PutISRExceptionStr("        _\r\n", 0);
+	PutISRExceptionStr("       _\r\n", 0);
+	PutISRExceptionStr("      _\r\n", 0);
+	PutISRExceptionStr("     ________\r", 0);
 
 	InstallGdt();
 	InitIdt32();
@@ -40,11 +45,22 @@ void CEntry(void)
 
 	SetPITChannelModeFrequency(0, 2, 1193);
 
-	SleepSeconds(5);
+	SleepSeconds(10);
+
+	ResetCur();
 
 	Clear(mColor);
 
 	PutStr("Welcome To ZecelOS!\n");
+
+	int a = 80;
+
+	char str[4];
+
+	intToStr(a, str, sizeof(str));
+
+	PutStr("Commit Version: ");
+	PutStr(str);
 
 	__asm__ __volatile__ ("sti");
 

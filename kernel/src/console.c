@@ -7,6 +7,8 @@
 #include <font.h>
 #include <vga.h>
 #include <c/string.h>
+#include <stdbool.h>
+
 
 static uint16_t cursorX = 0, cursorY = 0;
 
@@ -125,4 +127,44 @@ void ISRPutChar(char c, uint8_t isrcolor)
 			cursorX += FONT_DIM;
 			break;
 	}
+}
+
+void BootPutChar(char c, uint8_t isrcolor, uint16_t x, uint16_t y)
+{
+	switch (c) {
+		case '\n':
+			if (cursorY > VGA_HEIGHT)
+				Clear(bg);
+			else {
+				cursorY += FONT_DIM;
+				cursorX = 0;
+			}
+			break;
+		case '\r':
+			cursorX = 0;
+			break;
+		default:
+			if (cursorX > VGA_WIDTH) {
+				cursorY += FONT_DIM;
+				cursorX = 0;
+			}
+
+			BasicPutChar(c, cursorX, cursorY, fg, isrcolor);
+			cursorX += FONT_DIM;
+			cursorY = 0;
+			break;
+	}
+}
+
+void ResetCur(void)
+{
+	cursorX = 0;
+	cursorY = 0;
+}
+
+void BootString(const char* str, uint16_t x, uint16_t y)
+{
+	for (int i = 0; i < StrLength(str); i++)
+		BootPutChar(str[i], 0, x, y);
+	
 }

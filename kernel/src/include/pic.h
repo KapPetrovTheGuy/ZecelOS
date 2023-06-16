@@ -24,6 +24,7 @@
 #define PIC_EOI									0x20
 
 #define IRQ0_SLEEP_TIMER_TICKS_AREA				0x1700
+#define RTC_DATETIME_AREA						0x1610
 
 void SendPICEOI(uint8_t irq)
 {
@@ -119,15 +120,6 @@ void SleepSeconds(uint16_t seconds)
 
 __attribute__ ((interrupt)) void TimerIRQ0Handler(IntFrame32T *frame)
 {
-	// char buffer[20];
-
-	// PutStr("Timer seconds: ");
-
-	// uint32_t seconds = ticks / 1000;  // Convert ticks to seconds
-    // uint32ToString(seconds, buffer, sizeof(buffer));
-
-    // PutStr(buffer);
-    // PutStr("\r");
     ticks++;
 
 	SendPICEOI(0);
@@ -145,4 +137,45 @@ void SetPITChannelModeFrequency(const uint8_t channel, const uint8_t operatingMo
 	outb(0x40 + channel, (uint8_t)(freq >> 8));
 
 	__asm__ __volatile__ ("sti");
+}
+
+uint8_t ReadCMOS(uint8_t reg)
+{
+    // Set the CMOS address register
+    outb(0x70, reg);
+    // Read the data from the CMOS data register
+    return inb(0x71);
+}
+
+uint8_t BCDToDecimal(uint8_t bcd)
+{
+    return (bcd >> 4) * 10 + (bcd & 0x0F);
+}
+
+void ReadRTC(uint8_t* year, uint8_t* month, uint8_t* day, uint8_t* hour, uint8_t* minute, uint8_t* second)
+{
+    // Disable interrupts to prevent time inconsistency
+    __asm__ __volatile__ ("cli");
+
+    // Wait until the RTC is not updating
+    while (ReadCMOS(0x0A) & 0x80);
+
+    // Read the time values from the CMOS RTC registers
+    uint8_t year_bcd = ReadCMOS(0x09);
+    uint8_t month_bcd = ReadCMOS(0x08);
+    uint8_t day_bcd = ReadCMOS(0x07);
+    uint8_t hour_bcd = ReadCMOS(0x04);
+    uint8_t minute_bcd = ReadCMOS(0x02);
+    uint8_t second_bcd = ReadCMOS(0x00);
+
+    // Convert BCD values to decimal
+    *year = BCDToDecimal(year_bcd);
+    *month = BCDToDecimal(month_bcd);
+    *day = BCDToDecimal(day_bcd);
+    *hour = BCDToDecimal(hour_bcd);
+    *minute = BCDToDecimal(minute_bcd);
+    *second = BCDToDecimal(second_bcd);
+
+    // Enable interrupts
+    __asm__ __volatile__ ("sti");
 }

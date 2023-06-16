@@ -22,7 +22,9 @@ void CEntry(void)
 	PutISRExceptionStr("        _\r\n", 0);
 	PutISRExceptionStr("       _\r\n", 0);
 	PutISRExceptionStr("      _\r\n", 0);
-	PutISRExceptionStr("     ________\r", 0);
+	PutISRExceptionStr("     ________\r\n", 0);
+
+	ResetCur();
 
 	InstallGdt();
 	InitIdt32();
@@ -38,22 +40,20 @@ void CEntry(void)
 
 	SetIDTDescriptor32(0x20, TimerIRQ0Handler, INT_GATE_FLAGS);
 	//SetIDTDescriptor32(0x21, <KeyboardIRQHandler>, INT_GATE_FLAGS);
-	//SetIDTDescriptor32(0x28, <CmosRtcIRQ8Handler>, INT_GATE_FLAGS);
 
 	ClearIRQMask(0);
-	// ClearIRQMask(1);
+
+	__asm__ __volatile__ ("sti");
 
 	SetPITChannelModeFrequency(0, 2, 1193);
 
-	SleepSeconds(10);
-
-	ResetCur();
+	SleepSeconds(0);
 
 	Clear(mColor);
 
 	PutStr("Welcome To ZecelOS!\n");
 
-	int a = 80;
+	int a = 81;
 
 	char str[4];
 
@@ -61,8 +61,22 @@ void CEntry(void)
 
 	PutStr("Commit Version: ");
 	PutStr(str);
+	PutStr("\n");
 
-	__asm__ __volatile__ ("sti");
+	while (1)
+	{
+		uint8_t year, month, day, hour, minute, second;
+		ReadRTC(&year, &month, &day, &hour, &minute, &second);
+
+		ClearLine(5); // Clear the line where the date and time are displayed
+		PutStr(" ");
+		PrintTime(hour, minute, second, day, month, year);
+
+		// Delay between RTC updates (adjust as needed)
+		SleepMilliseconds(1000);
+	}
+
+
 
 	while (1)
 		asm volatile("hlt");

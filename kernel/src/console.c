@@ -162,9 +162,78 @@ void ResetCur(void)
 	cursorY = 0;
 }
 
-void BootString(const char* str, uint16_t x, uint16_t y)
+void SetCur(uint16_t x, uint16_t y)
 {
-	for (int i = 0; i < StrLength(str); i++)
-		BootPutChar(str[i], 0, x, y);
-	
+	cursorX = x;
+	cursorY = y;
+}
+
+void PutDec(uint32_t number)
+{
+    if (number == 0) {
+        PutChar('0');
+        return;
+    }
+
+    char buffer[10];  // Assuming maximum 10-digit number
+    int i = 0;
+
+    while (number > 0) {
+        buffer[i++] = '0' + (number % 10);
+        number /= 10;
+    }
+
+    while (i > 0) {
+        PutChar(buffer[--i]);
+    }
+}
+
+void ClearLine(uint16_t line)
+{
+    // Calculate the starting position of the line
+    uint16_t startX = 0;
+    uint16_t startY = line * FONT_DIM;
+
+    // Clear each character on the line by printing spaces
+    for (uint16_t x = startX; x < VGA_WIDTH; x += FONT_DIM)
+    {
+        // Set the cursor position
+        SetCur(x, startY);
+        
+        // Print a space character to clear the position
+        PutChar(' ');
+    }
+}
+
+void PrintTime(uint8_t hour, uint8_t minute, uint8_t second, uint8_t day, uint8_t month, uint8_t year)
+{
+    // Determine if it is AM or PM based on the hour
+    const char* ampm = (hour < 12) ? "AM" : "PM";
+
+    // Convert hour to 12-hour format if necessary
+    if (hour > 12)
+        hour -= 12;
+
+    // Print the formatted time with AM/PM indicator
+    PutDec(hour);
+    PutChar(':');
+    if (minute < 10)
+        PutChar('0');
+    PutDec(minute);
+    PutChar(':');
+    if (second < 10)
+        PutChar('0');
+    PutDec(second);
+    PutChar(' ');
+    PutStr(ampm);
+    PutChar('\n');
+
+    // Print the formatted date
+    PutStr("Date: ");
+    PutDec(year);
+    PutChar('-');
+    PutDec(month);
+    PutChar('-');
+    PutDec(day);
+    PutChar('\n');
 }

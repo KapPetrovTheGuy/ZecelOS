@@ -53,7 +53,7 @@ void CEntry(void)
 
 	PutStr("Welcome To ZecelOS!\n");
 
-	int a = 81;
+	int a = 82;
 
 	char str[4];
 
@@ -75,9 +75,4 @@ void CEntry(void)
 		// Delay between RTC updates (adjust as needed)
 		SleepMilliseconds(1000);
 	}
-
-
-
-	while (1)
-		asm volatile("hlt");
 }

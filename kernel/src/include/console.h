@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-static const uint8_t mColor = 1;
+static const uint8_t mColor = 10;
 
 static uint8_t fg = 63, bg;
 

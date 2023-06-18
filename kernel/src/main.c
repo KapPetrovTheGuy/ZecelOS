@@ -39,29 +39,36 @@ void CEntry(void)
 	RemapPIC();
 
 	SetIDTDescriptor32(0x20, TimerIRQ0Handler, INT_GATE_FLAGS);
-	SetIDTDescriptor32(0x21, KeyboardIRQ1Handler, INT_GATE_FLAGS);
-
-	ClearIRQMask(0);
 
 	__asm__ __volatile__ ("sti");
 
 	SetPITChannelModeFrequency(0, 2, 1193);
 
-	SleepSeconds(0);
+	SleepSeconds(5);
+
+	SetIDTDescriptor32(0x21, KeyboardIRQ1Handler, INT_GATE_FLAGS);
+
+	ClearIRQMask(0);
+	ClearIRQMask(1);
 
 	Clear(mColor);
 
-	// PutStr("Welcome To ZecelOS!\n");
+	PutStr("Welcome To ZecelOS!\n");
 
-	// int a = 85;
+	int a = 85;
 
-	// char str[4];
+	char str[4];
 
-	// intToStr(a, str, sizeof(str));
+	intToStr(a, str, sizeof(str));
 
-	// PutStr("Commit Version: ");
-	// PutStr(str);
-	// PutStr("\n");
+	PutStr("Commit Version: ");
+	PutStr(str);
+	PutStr("\n");
+
+	PutStr("> ");
+
+	cX = 10;
+	cY = 15;
 
 	while (1) {
 		uint8_t year, month, day, hour, minute, second;

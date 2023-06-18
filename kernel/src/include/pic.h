@@ -12,6 +12,7 @@
 #include <c/string.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <vga.h>
 
 #define PIC_1_CMD								0x20
 #define PIC_1_DATA								0x21
@@ -378,6 +379,58 @@ __attribute__ ((interrupt)) void KeyboardIRQ1Handler(IntFrame32T *frame)
 
                 case 'u':
                     character = 'U';
+                    break;
+
+                case ';':
+                    character = ':';
+                    break;
+
+                case '2':
+                    character = '@';
+                    break;
+
+                case '3':
+                    character = '#';
+                    break;
+
+                case '4':
+                    character = '$';
+                    break;
+
+                case '5':
+                    character = '%';
+                    break;
+
+                case '6':
+                    character = '^';
+                    break;
+
+                case '7':
+                    character = '&';
+                    break;
+
+                case '8':
+                    character = '*';
+                    break;
+
+                case '9':
+                    character = '(';
+                    break;
+
+                case '0':
+                    character = ')';
+                    break;
+
+                case '`':
+                    Clear(mColor);
+                    break;
+
+                case ',':
+                    character = '<';
+                    break;
+
+                case '.':
+                    character = '>';
                     break;
             }
         }

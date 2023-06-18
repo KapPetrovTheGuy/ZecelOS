@@ -58,7 +58,7 @@ __attribute__ ((interrupt)) void DefaultExcpHandlerErrCode(IntFrame32T *IntFrame
 
 __attribute__ ((interrupt)) void DefaultIntHandler(IntFrame32T *IntFrame32)
 {
-	PutStr("DEFAULT_INTERRUPT_HANDLER \r\n");
+	
 }
 
 void SetIDTDescriptor32(uint8_t entryNumber, void *isr, uint8_t flags)

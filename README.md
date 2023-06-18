@@ -1,5 +1,5 @@
 # ZecelOS
-![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/6371cf7e-9290-466c-aa40-5bd97e5b221d)
+![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/843240b1-3102-453a-b59e-03e14ee82356)
 ![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/dace3e45-deb7-467e-a35d-2d325e62d1b2)
 
 # What is it

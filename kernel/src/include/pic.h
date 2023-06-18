@@ -197,7 +197,6 @@ char scancodeToChar[] = {
     '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
     '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 
-	[0x49] = '9',
 	[0x1B] = '!'
 };
 
@@ -271,9 +270,114 @@ __attribute__ ((interrupt)) void KeyboardIRQ1Handler(IntFrame32T *frame)
             {
                 case '1':
                     character = '!';
+                    break;
 
                 case '/':
                     character = '?';
+                    break;
+
+                case 'a':
+                    character = 'A';
+                    break;
+
+                case 'b':
+                    character = 'B';
+                    break;
+
+                case 'c':
+                    character = 'C';
+                    break;
+
+                case 'd':
+                    character = 'D';
+                    break;
+
+                case 'e':
+                    character = 'E';
+                    break;
+
+                case 'f':
+                    character = 'F';
+                    break;
+
+                case 'g':
+                    character = 'G';
+                    break;
+
+                case 'h':
+                    character = 'H';
+                    break;
+
+                case 'i':
+                    character = 'I';
+                    break;
+
+                case 'j':
+                    character = 'J';
+                    break;
+
+                case 'k':
+                    character = 'K';
+                    break;
+
+                case 'l':
+                    character = 'L';
+                    break;
+
+                case 'm':
+                    character = 'M';
+                    break;
+
+                case 'n':
+                    character = 'N';
+                    break;
+
+                case 'o':
+                    character = 'O';
+                    break;
+
+                case 'p':
+                    character = 'P';
+                    break;
+
+                case 'q':
+                    character = 'Q';
+                    break;
+
+                case 'r':
+                    character = 'R';
+                    break;
+
+                case 's':
+                    character = 'S';
+                    break;
+
+                case 'v':
+                    character = 'V';
+                    break;
+
+                case 'w':
+                    character = 'W';
+                    break;
+
+                case 'x':
+                    character = 'X';
+                    break;
+
+                case 'y':
+                    character = 'Y';
+                    break;
+
+                case 'z':
+                    character = 'Z';
+                    break;
+
+                case 't':
+                    character = 'T';
+                    break;
+
+                case 'u':
+                    character = 'U';
                     break;
             }
         }

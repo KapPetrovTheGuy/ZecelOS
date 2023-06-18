@@ -11,6 +11,7 @@
 #include <idt.h>
 #include <c/string.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #define PIC_1_CMD								0x20
 #define PIC_1_DATA								0x21
@@ -25,6 +26,9 @@
 
 #define IRQ0_SLEEP_TIMER_TICKS_AREA				0x1700
 #define RTC_DATETIME_AREA						0x1610
+
+#define BUFFER_SIZE 100000
+#define MAX_COLS 320
 
 void SendPICEOI(uint8_t irq)
 {
@@ -178,4 +182,118 @@ void ReadRTC(uint8_t* year, uint8_t* month, uint8_t* day, uint8_t* hour, uint8_t
 
     // Enable interrupts
     __asm__ __volatile__ ("sti");
+}
+
+uint16_t cX = 0;
+uint16_t cY = 0;
+
+char scancodeToChar[] = {
+    '\0', '\0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\0',
+    '\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n', '\0',
+    'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`', '\0', '\\', 'z',
+    'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '\0', '\0', '\0', ' ', '\0', '\0',
+    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+
+	[0x49] = '9',
+	[0x1B] = '!'
+};
+
+bool shiftPressed = false;
+
+char displayBuffer[BUFFER_SIZE];
+uint16_t bufferIndex = 0;
+
+__attribute__ ((interrupt)) void KeyboardIRQ1Handler(IntFrame32T *frame)
+{
+    uint8_t scancode = inb(0x60); // Read the scancode from the keyboard controller
+
+	if (scancode == 0x2A) // Shift pressed
+    {
+        shiftPressed = true;
+    }
+    else if (scancode == 0xAA) // Shift released
+    {
+        shiftPressed = false;
+    }
+
+    else if (scancode == 0x1C) // Enter key
+    {
+        cX = 0;
+        cY += 10;
+        cX = 0;
+    }
+
+    else if (scancode == 0x48) // Up arrow key
+    {
+        cY -= 10;
+    }
+
+    else if (scancode == 0x50) // Up arrow key
+    {
+        cY += 10;
+    }
+
+    else if (scancode == 0x4D) // Up arrow key
+    {
+        cX += 10;
+    }
+
+    else if (scancode == 0x4B) // Up arrow key
+    {
+        cX -= 10;
+    }
+
+    else if (scancode == 0x0E) // Up arrow key
+    {
+        if (cX > 0)
+        {
+            cX -= 10; // Move cursor back 10 columns
+            PutCharXY(' ', cX, cY); // Print a space to erase the previous character
+        }
+        else if (cY > 0)
+        {
+            cY -= 10; // Move cursor up to the previous line
+            cX = MAX_COLS - 1; // Set cursor to the last column of the previous line
+        }
+    }
+
+    if (scancode < sizeof(scancodeToChar))
+    {
+        char character = scancodeToChar[scancode];
+
+		if (shiftPressed)
+        {
+            // Handle Shifted characters
+            switch (character)
+            {
+                case '1':
+                    character = '!';
+
+                case '/':
+                    character = '?';
+                    break;
+            }
+        }
+
+        if (character != '\0')
+        {
+            // Handle line wrapping
+            if (cX >= MAX_COLS)
+            {
+                 cX = 0;
+                 cY += 10;
+            }
+
+            // Output the character to the display
+            PutCharXY(character, cX, cY);
+
+            // Update cursor position
+            cX+= 10;
+        }
+    }
+
+    SendPICEOI(1);
 }

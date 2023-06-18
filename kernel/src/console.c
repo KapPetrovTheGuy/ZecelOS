@@ -215,6 +215,9 @@ void PrintTime(uint8_t hour, uint8_t minute, uint8_t second, uint8_t day, uint8_
         hour -= 12;
 
     // Print the formatted time with AM/PM indicator
+
+    SetCur(158, 191);
+
     PutDec(hour);
     PutChar(':');
     if (minute < 10)
@@ -226,14 +229,74 @@ void PrintTime(uint8_t hour, uint8_t minute, uint8_t second, uint8_t day, uint8_
     PutDec(second);
     PutChar(' ');
     PutStr(ampm);
-    PutChar('\n');
 
     // Print the formatted date
-    PutStr("Date: ");
-    PutDec(year);
+
+    PutStr(", ");
+    PutDec(day);
     PutChar('-');
     PutDec(month);
     PutChar('-');
-    PutDec(day);
+    PutDec(year);
     PutChar('\n');
+
+    ResetCur();
+}
+
+void PutHex(uint32_t value)
+{
+    const char* hexChars = "0123456789ABCDEF";
+    char buffer[9]; // Assumes 32-bit value (8 hexadecimal digits) + null terminator
+    int i = 7;
+
+    buffer[8] = '\0'; // Null-terminate the string
+
+    while (i >= 0)
+    {
+        buffer[i] = hexChars[value & 0xF]; // Get the lowest 4 bits and convert to hexadecimal
+        value >>= 4; // Shift the value right by 4 bits
+        i--;
+    }
+
+    PutStr("0x");
+    PutStr(buffer);
+}
+
+void SetCurX(uint16_t x)
+{
+    cursorX = x;
+}
+
+void PutCharXY(char c, uint16_t x, uint16_t y)
+{
+    InitBgColor();
+
+    switch (c) {
+        case '\n':
+            if (cursorY > VGA_HEIGHT)
+                Clear(bg);
+            else {
+                cursorY += FONT_DIM;
+                cursorX = 0;
+            }
+            break;
+        case '\r':
+            cursorX = 0;
+            break;
+        case '\b':
+            if (cursorX > 0) {
+                cursorX -= FONT_DIM; // Move cursor back one column
+                BasicPutChar(' ', cursorX, cursorY, fg, bg); // Print a space to erase the previous character
+            }
+            break;
+        default:
+            if (cursorX > VGA_WIDTH) {
+                cursorY += FONT_DIM;
+                cursorX = 0;
+            }
+
+            BasicPutChar(c, x, y, fg, bg);
+            cursorX += FONT_DIM;
+            break;
+    }
 }

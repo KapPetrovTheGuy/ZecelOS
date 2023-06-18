@@ -39,7 +39,7 @@ void CEntry(void)
 	RemapPIC();
 
 	SetIDTDescriptor32(0x20, TimerIRQ0Handler, INT_GATE_FLAGS);
-	//SetIDTDescriptor32(0x21, <KeyboardIRQHandler>, INT_GATE_FLAGS);
+	SetIDTDescriptor32(0x21, KeyboardIRQ1Handler, INT_GATE_FLAGS);
 
 	ClearIRQMask(0);
 
@@ -51,20 +51,19 @@ void CEntry(void)
 
 	Clear(mColor);
 
-	PutStr("Welcome To ZecelOS!\n");
+	// PutStr("Welcome To ZecelOS!\n");
 
-	int a = 82;
+	// int a = 85;
 
-	char str[4];
+	// char str[4];
 
-	intToStr(a, str, sizeof(str));
+	// intToStr(a, str, sizeof(str));
 
-	PutStr("Commit Version: ");
-	PutStr(str);
-	PutStr("\n");
+	// PutStr("Commit Version: ");
+	// PutStr(str);
+	// PutStr("\n");
 
-	while (1)
-	{
+	while (1) {
 		uint8_t year, month, day, hour, minute, second;
 		ReadRTC(&year, &month, &day, &hour, &minute, &second);
 
@@ -72,7 +71,7 @@ void CEntry(void)
 		PutStr(" ");
 		PrintTime(hour, minute, second, day, month, year);
 
-		// Delay between RTC updates (adjust as needed)
 		SleepMilliseconds(1000);
 	}
+
 }

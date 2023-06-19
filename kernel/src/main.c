@@ -10,6 +10,8 @@
 #include <exceptions.h>
 #include <syscalls.h>
 #include <pic.h>
+#include <keyboard.h>
+#include <pc_speaker.h>
 
 void CEntry(void) 
 {
@@ -55,7 +57,7 @@ void CEntry(void)
 
 	PutStr("Welcome To ZecelOS!\n");
 
-	int a = 85;
+	int a = 91;
 
 	char str[4];
 
@@ -69,6 +71,16 @@ void CEntry(void)
 
 	cX = 10;
 	cY = 15;
+
+	PlaySound(493.883);
+	SleepSeconds(1);
+	PlaySound(440);
+	SleepSeconds(1);
+	PlaySound(391.995);
+	SleepSeconds(1);
+	PlaySound(349.228); 
+	SleepSeconds(1);
+	StopSound();
 
 	while (1) {
 		uint8_t year, month, day, hour, minute, second;

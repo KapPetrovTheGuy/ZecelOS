@@ -13,5 +13,5 @@ Also join the [Discord](https://discord.gg/XKJHHJe5cj)
 # Developers
 * Kap Petrov, Programmer, Main Lead
 * Vincent, Designer, CelOS Developer
-* GZB, Designer
+* GZB, Designer, Exclusive ZecelOS App Development
 * amrix, Programmer, Co-lead

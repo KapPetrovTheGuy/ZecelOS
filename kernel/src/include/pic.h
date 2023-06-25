@@ -28,8 +28,8 @@
 #define IRQ0_SLEEP_TIMER_TICKS_AREA				0x1700
 #define RTC_DATETIME_AREA						0x1610
 
-#define BUFFER_SIZE 100000
-#define MAX_COLS 320
+#define BUFFER_SIZE 10000
+#define MAX_COLS 999
 
 void SendPICEOI(uint8_t irq)
 {

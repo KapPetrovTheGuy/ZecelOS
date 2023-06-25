@@ -57,7 +57,7 @@ void CEntry(void)
 
 	PutStr("Welcome To ZecelOS!\n");
 
-	int a = 91;
+	int a = 93;
 
 	char str[4];
 
@@ -67,10 +67,14 @@ void CEntry(void)
 	PutStr(str);
 	PutStr("\n");
 
-	PutStr("> ");
+	PutStr(" Type a command");
+	cY += 10;
+	PutStr("(press");
+	cY += 10;
+	PutStr(" backspace after a  new line):");
 
-	cX = 10;
-	cY = 15;
+	cX = 0;
+	cY = 45;
 
 	PlaySound(493.883);
 	SleepSeconds(1);
@@ -86,7 +90,7 @@ void CEntry(void)
 		uint8_t year, month, day, hour, minute, second;
 		ReadRTC(&year, &month, &day, &hour, &minute, &second);
 
-		ClearLine(5); // Clear the line where the date and time are displayed
+		ClearLine(900); // Clear the line where the date and time are displayed
 		PutStr(" ");
 		PrintTime(hour, minute, second, day, month, year);
 

@@ -6,7 +6,7 @@
 ISO = ZecelOS.iso
 
 VM = qemu-system-x86_64
-VMFLAGS = -rtc base=localtime,clock=vm,driftfix=slew -soundhw pcspk -monitor stdio -m 16M
+VMFLAGS = -rtc base=localtime,clock=vm,driftfix=slew -monitor stdio -m 16M
 
 all: iso run clean
 

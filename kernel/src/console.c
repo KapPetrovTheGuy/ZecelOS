@@ -300,3 +300,12 @@ void PutCharXY(char c, uint16_t x, uint16_t y)
             break;
     }
 }
+
+void PutStrXY(const char *str, uint16_t x, uint16_t y)
+{
+    for (int i = 0; i < StrLength(str); i++)
+    {
+        PutCharXY(str[i], x, y);
+        x += 10;
+    }
+}

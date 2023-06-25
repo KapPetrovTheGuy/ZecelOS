@@ -9,6 +9,7 @@ static uint8_t fg = 63, bg;
 
 void PutChar(char c);
 void PutCharXY(char c, uint16_t x, uint16_t y);
+void PutStrXY(const char *str, uint16_t x, uint16_t y);
 void PutStr(const char *str);
 void PutISRExceptionStr(const char* str, uint8_t isrcolor);
 void ISRPutChar(char c, uint8_t isrcolor);

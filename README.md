@@ -1,7 +1,8 @@
 # ZecelOS
 ![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/b4428bb3-3df7-4024-872c-29cb48fa01a8)
 
-![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/c435b822-cf2f-4e42-9006-9fb2e2a4e10d)
+![image](https://github.com/KapPetrovTheGuy/ZecelOS/assets/123942802/7549beba-9657-4bd2-af80-79b7f6e1f5ed)
+
 
 # What is it
 ZecelOS is a tiny OS written in C and Assembly.

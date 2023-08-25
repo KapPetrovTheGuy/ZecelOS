@@ -12,11 +12,16 @@
 #include <console.h>
 #include <vga.h>
 #include <c/string.h>
+#include <graphics.h>
+#include <programs/TextEditor.h>
+#include <c/math.h>
 
 #define MAX_COMMAND_LENGTH       100
 
-uint16_t cX = 0;
-uint16_t cY = 0;
+static uint16_t cX = 0;
+static uint16_t cY = 0;
+
+bool cmd = true;
 
 char scancodeToChar[] = {
     '\0', '\0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\0',
@@ -39,6 +44,8 @@ uint16_t bufferIndex = 0;
 
 char commandBuffer[MAX_COMMAND_LENGTH];
 uint16_t commandIndex = 0;
+
+static uint8_t scancode;
 
 void execCmd(const char* command)
 {
@@ -89,6 +96,7 @@ void execCmd(const char* command)
 
 		while (true)
 		{
+			Clear(0);
 			asm("hlt");
 		}
     }
@@ -99,8 +107,41 @@ void execCmd(const char* command)
         outb(0x64, 0xfe);
     }
 
+    else if (StrCompare(command, "gui") == 0)
+    {
+        cmd = false;
+
+        Clear(mColor);
+        // Rectangle(1, 0, 0, 100, 100);
+        // Rectangle(2, 100, 0, 100, 100);
+        // Rectangle(4, 200, 0, 100, 100);
+
+        BoredFace();
+    }
+
+	else if (StrCompare(command, "crazy") == 0)
+    {
+        cmd = false;
+
+        int numUpdates = 100; // Set the desired number of color updates
+		int color = 1;
+
+		for (int i = 0; i < numUpdates; i++)
+		{
+			Clear(color);
+			color++;
+			SleepMilliseconds(1000);
+			Clear(color);
+		}
+    }
+
+	// else if (StrCompare(command, "texteditor") == 0)
+    // {
+    //     TextEditor(scancode, cX, cY, shiftPressed, scancodeToChar, commandIndex, commandBuffer, cmd);
+    // }
+
 	else {
-		PutStrXY("INVALID COMMAND!", cX, cY);
+		PutStrXY("Invalid command!", cX, cY);
 		cX = 0;
         cY += 10;
 
@@ -112,276 +153,269 @@ void execCmd(const char* command)
 
 __attribute__ ((interrupt)) void KeyboardIRQ1Handler(IntFrame32T *frame)
 {
-    uint8_t scancode = inb(0x60); // Read the scancode from the keyboard controller
-
-	if (scancode == 0x2A) // Shift pressed
+    if(cmd)
     {
-        shiftPressed = true;
-    }
-    else if (scancode == 0xAA) // Shift released
-    {
-        shiftPressed = false;
-    }
+		scancode = inb(0x60);
 
-    else if (scancode == 0x1C) // Enter key
-    {
-        cX = 0;
-        cY += 10;
-        cX = 0;
-
-        // Null-terminate the command buffer
-        commandBuffer[commandIndex] = '\0';
-
-        // Execute the command
-        execCmd(commandBuffer);
-
-        // Clear the command buffer
-        MemSet(commandBuffer, 0, sizeof(commandBuffer));
-        commandIndex = 0;
-    }
-
-    else if (scancode == 0x48) // Up arrow key
-    {
-        cY -= 10;
-    }
-
-    else if (scancode == 0x50) // Down arrow key
-    {
-        cY += 10;
-    }
-
-    else if (scancode == 0x4D) // Right arrow key
-    {
-        cX += 10;
-    }
-
-    else if (scancode == 0x4B) // Left arrow key
-    {
-        cX -= 10;
-    }
-
-    else if (scancode == 0x0E) // Backspace key
-    {
-        if (cX > 0)
+        if (scancode == 0x2A) // Shift pressed
         {
-            cX -= 10; // Move cursor back 10 columns
-            PutCharXY(' ', cX, cY); // Print a space to erase the previous character
+            shiftPressed = true;
         }
-        else if (cY > 0)
+        else if (scancode == 0xAA) // Shift released
         {
-            cY -= 10; // Move cursor up to the previous line
-            cX = MAX_COLS - 1; // Set cursor to the last column of the previous line
+            shiftPressed = false;
         }
 
-        if (commandIndex > 0)
+        else if (scancode == 0x1C) // Enter key
         {
-            commandIndex--;
+            cX = 0;
+            cY += 10;
+            cX = 0;
+
+            // Null-terminate the command buffer
             commandBuffer[commandIndex] = '\0';
+
+            // Execute the command
+            execCmd(commandBuffer);
+
+            // Clear the command buffer
+            MemSet(commandBuffer, 0, sizeof(commandBuffer));
+            commandIndex = 0;
         }
-    }
 
-    if (scancode < sizeof(scancodeToChar))
-    {
-        char character = scancodeToChar[scancode];
-
-		if (shiftPressed)
+        else if (scancode == 0x4D) // Right arrow key
         {
-            // Handle Shifted characters
-            switch (character)
+            cX += 10;
+        }
+
+        else if (scancode == 0x4B) // Left arrow key
+        {
+            cX -= 10;
+        }
+
+        else if (scancode == 0x0E) // Backspace key
+        {
+            if (cX > 0)
             {
-                case '1':
-                    character = '!';
-                    break;
+                cX -= 10; // Move cursor back 10 columns
+                PutCharXY(' ', cX, cY); // Print a space to erase the previous character
+            }
+            else if (cY > 0)
+            {
+                cY -= 10; // Move cursor up to the previous line
+                cX = MAX_COLS - 1; // Set cursor to the last column of the previous line
+            }
 
-                case '/':
-                    character = '?';
-                    break;
-
-                case 'a':
-                    character = 'A';
-                    break;
-
-                case 'b':
-                    character = 'B';
-                    break;
-
-                case 'c':
-                    character = 'C';
-                    break;
-
-                case 'd':
-                    character = 'D';
-                    break;
-
-                case 'e':
-                    character = 'E';
-                    break;
-
-                case 'f':
-                    character = 'F';
-                    break;
-
-                case 'g':
-                    character = 'G';
-                    break;
-
-                case 'h':
-                    character = 'H';
-                    break;
-
-                case 'i':
-                    character = 'I';
-                    break;
-
-                case 'j':
-                    character = 'J';
-                    break;
-
-                case 'k':
-                    character = 'K';
-                    break;
-
-                case 'l':
-                    character = 'L';
-                    break;
-
-                case 'm':
-                    character = 'M';
-                    break;
-
-                case 'n':
-                    character = 'N';
-                    break;
-
-                case 'o':
-                    character = 'O';
-                    break;
-
-                case 'p':
-                    character = 'P';
-                    break;
-
-                case 'q':
-                    character = 'Q';
-                    break;
-
-                case 'r':
-                    character = 'R';
-                    break;
-
-                case 's':
-                    character = 'S';
-                    break;
-
-                case 'v':
-                    character = 'V';
-                    break;
-
-                case 'w':
-                    character = 'W';
-                    break;
-
-                case 'x':
-                    character = 'X';
-                    break;
-
-                case 'y':
-                    character = 'Y';
-                    break;
-
-                case 'z':
-                    character = 'Z';
-                    break;
-
-                case 't':
-                    character = 'T';
-                    break;
-
-                case 'u':
-                    character = 'U';
-                    break;
-
-                case ';':
-                    character = ':';
-                    break;
-
-                case '2':
-                    character = '@';
-                    break;
-
-                case '3':
-                    character = '#';
-                    break;
-
-                case '4':
-                    character = '$';
-                    break;
-
-                case '5':
-                    character = '%';
-                    break;
-
-                case '6':
-                    character = '^';
-                    break;
-
-                case '7':
-                    character = '&';
-                    break;
-
-                case '8':
-                    character = '*';
-                    break;
-
-                case '9':
-                    character = '(';
-                    break;
-
-                case '0':
-                    character = ')';
-                    break;
-
-                case '`':
-                    character = '~';
-                    break;
-
-                case ',':
-                    character = '<';
-                    break;
-
-                case '.':
-                    character = '>';
-                    break;
-
-                case '=':
-                    character = '+';
-                    break;
-
-                case '-':
-                    character = '_';
-                    break;
+            if (commandIndex > 0)
+            {
+                commandIndex--;
+                commandBuffer[commandIndex] = '\0';
             }
         }
 
-        if (character != '\0')
+        if (scancode < sizeof(scancodeToChar))
         {
-            // Handle line wrapping
-            if (cX >= MAX_COLS)
+            char character = scancodeToChar[scancode];
+
+            if (shiftPressed)
             {
-                 cX = 0;
-                 cY += 10;
+                // Handle Shifted characters
+                switch (character)
+                {
+                    case '1':
+                        character = '!';
+                        break;
+
+                    case '/':
+                        character = '?';
+                        break;
+
+                    case 'a':
+                        character = 'A';
+                        break;
+
+                    case 'b':
+                        character = 'B';
+                        break;
+
+                    case 'c':
+                        character = 'C';
+                        break;
+
+                    case 'd':
+                        character = 'D';
+                        break;
+
+                    case 'e':
+                        character = 'E';
+                        break;
+
+                    case 'f':
+                        character = 'F';
+                        break;
+
+                    case 'g':
+                        character = 'G';
+                        break;
+
+                    case 'h':
+                        character = 'H';
+                        break;
+
+                    case 'i':
+                        character = 'I';
+                        break;
+
+                    case 'j':
+                        character = 'J';
+                        break;
+
+                    case 'k':
+                        character = 'K';
+                        break;
+
+                    case 'l':
+                        character = 'L';
+                        break;
+
+                    case 'm':
+                        character = 'M';
+                        break;
+
+                    case 'n':
+                        character = 'N';
+                        break;
+
+                    case 'o':
+                        character = 'O';
+                        break;
+
+                    case 'p':
+                        character = 'P';
+                        break;
+
+                    case 'q':
+                        character = 'Q';
+                        break;
+
+                    case 'r':
+                        character = 'R';
+                        break;
+
+                    case 's':
+                        character = 'S';
+                        break;
+
+                    case 'v':
+                        character = 'V';
+                        break;
+
+                    case 'w':
+                        character = 'W';
+                        break;
+
+                    case 'x':
+                        character = 'X';
+                        break;
+
+                    case 'y':
+                        character = 'Y';
+                        break;
+
+                    case 'z':
+                        character = 'Z';
+                        break;
+
+                    case 't':
+                        character = 'T';
+                        break;
+
+                    case 'u':
+                        character = 'U';
+                        break;
+
+                    case ';':
+                        character = ':';
+                        break;
+
+                    case '2':
+                        character = '@';
+                        break;
+
+                    case '3':
+                        character = '#';
+                        break;
+
+                    case '4':
+                        character = '$';
+                        break;
+
+                    case '5':
+                        character = '%';
+                        break;
+
+                    case '6':
+                        character = '^';
+                        break;
+
+                    case '7':
+                        character = '&';
+                        break;
+
+                    case '8':
+                        character = '*';
+                        break;
+
+                    case '9':
+                        character = '(';
+                        break;
+
+                    case '0':
+                        character = ')';
+                        break;
+
+                    case '`':
+                        character = '~';
+                        break;
+
+                    case ',':
+                        character = '<';
+                        break;
+
+                    case '.':
+                        character = '>';
+                        break;
+
+                    case '=':
+                        character = '+';
+                        break;
+
+                    case '-':
+                        character = '_';
+                        break;
+                }
             }
 
-            // Output the character to the display
-            PutCharXY(character, cX, cY);
-
-            // Update cursor position
-            cX+= 10;
-
-            if (commandIndex < MAX_COMMAND_LENGTH - 1)
+            if (character != '\0')
             {
-                commandBuffer[commandIndex] = character;
-                commandIndex++;
+                // Handle line wrapping
+                if (cX >= MAX_COLS)
+                {
+                    cX = 0;
+                    cY += 10;
+                }
+
+                // Output the character to the display
+                PutCharXY(character, cX, cY);
+
+                // Update cursor position
+                cX+= 10;
+
+                if (commandIndex < MAX_COMMAND_LENGTH - 1)
+                {
+                    commandBuffer[commandIndex] = character;
+                    commandIndex++;
+                }
             }
         }
     }

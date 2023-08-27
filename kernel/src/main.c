@@ -26,7 +26,11 @@ void CEntry(void)
 	PutISRExceptionStr("      _\r\n", 0);
 	PutISRExceptionStr("     ________\r\n", 0);
 
-	ResetCur();
+	PutStr("\n");
+
+	PutISRExceptionStr("STARTING ZECEL OS... \n", 0);
+
+	PutISRExceptionStr("STARTING ZECEL\r", 63);
 
 	InstallGdt();
 	InitIdt32();
@@ -46,7 +50,53 @@ void CEntry(void)
 
 	SetPITChannelModeFrequency(0, 2, 1193);
 
-	SleepSeconds(5);
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL.\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL..\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL...\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL....\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL.....\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL.....\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("STARTING ZECEL......\r", 63);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("                      \r", 10);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("                        \r", 1);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("                        \r", 5);
+
+	SleepSeconds(2.5);
+
+	PutISRExceptionStr("                     ", 7);
+
+	SleepSeconds(0);
+
+	ResetCur();
 
 	SetIDTDescriptor32(0x21, KeyboardIRQ1Handler, INT_GATE_FLAGS);
 
@@ -92,6 +142,7 @@ void CEntry(void)
 
 		ClearLine(900); // Clear the line where the date and time are displayed
 		PutStr(" ");
+
 		PrintTime(hour, minute, second, day, month, year);
 
 		SleepMilliseconds(1000);

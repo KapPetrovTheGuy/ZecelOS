@@ -20,4 +20,13 @@ double sin(double x) {
     return result;
 }
 
+static unsigned int next = 1;
+
+int randomint(int start, int end) {
+    next = next * 1103515245 + 12345;
+    unsigned int rand_num = (unsigned int)(next / 65536) % 32768;
+    return start + rand_num % (end - start + 1);
+}
+
+
 #endif

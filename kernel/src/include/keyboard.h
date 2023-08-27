@@ -107,32 +107,21 @@ void execCmd(const char* command)
         outb(0x64, 0xfe);
     }
 
-    else if (StrCompare(command, "gui") == 0)
+    else if (StrCompare(command, "bored") == 0)
     {
         cmd = false;
 
         Clear(mColor);
-        // Rectangle(1, 0, 0, 100, 100);
-        // Rectangle(2, 100, 0, 100, 100);
-        // Rectangle(4, 200, 0, 100, 100);
+        Rectangle(1, 0, 0, 100, 100);
+        Rectangle(2, 100, 0, 100, 100);
+        Rectangle(4, 200, 0, 100, 100);
 
         BoredFace();
-    }
 
-	else if (StrCompare(command, "crazy") == 0)
-    {
-        cmd = false;
+        Rectangle(0, 0, 190, 10, 10);
 
-        int numUpdates = 100; // Set the desired number of color updates
-		int color = 1;
+        Rectangle(0, 0, 100, 10, 10);
 
-		for (int i = 0; i < numUpdates; i++)
-		{
-			Clear(color);
-			color++;
-			SleepMilliseconds(1000);
-			Clear(color);
-		}
     }
 
 	// else if (StrCompare(command, "texteditor") == 0)

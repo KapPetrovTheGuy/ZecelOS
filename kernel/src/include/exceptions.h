@@ -12,7 +12,7 @@
 __attribute__ ((interrupt)) void DivBy0Handler(IntFrame32T *frame)
 {
     Clear(4);
-	PutISRExceptionStr("DIVIDE BY 0 ERROR - EXCEPTION HANDLED\r\n", 4);
+	//PutISRExceptionStr("DIVIDE BY 0 ERROR - EXCEPTION HANDLED\r\n", 4);
 
     asm volatile("hlt");
 

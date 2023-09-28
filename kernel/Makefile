@@ -36,6 +36,7 @@ LDFLAGS = \
 
 build:
 	mkdir -p obj/
+        mkdir -p obj/celos/
 	$(NASM) $(NASMFLAGS) src/entry.asm -o obj/entry.o
 	$(CC) $(CFLAGS) -c src/main.c -o obj/main.o
 	$(CC) $(CFLAGS) -c src/vga.c -o obj/vga.o

@@ -1,6 +1,6 @@
 #
 # ZecelOS ISO+Run Makfile
-# Author(s) - amrix
+# Author(s) - amrix, Vincent392
 #
 
 ISO = ZecelOS.iso
@@ -14,6 +14,7 @@ iso:
 	make -C kernel build
 	mkdir -p iso_tmp/boot/grub
 	cp kernel/kernel.elf iso_tmp/boot/
+        cp kernel/Flopkern.elf iso_tmp/boot/CelOS
 	cp cfg/grub.cfg iso_tmp/boot/grub/ 
 	grub-mkrescue -o $(ISO) iso_tmp
 
